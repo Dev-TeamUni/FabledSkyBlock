@@ -41,7 +41,7 @@ public class Upgrade {
 
     public enum Type {
 
-        Crop, Spawner, Fly, Drops, Size, Speed, Jump, Members
+        Crop, Spawner, Fly, Drops, Size, Speed, Jump, Members, Hoppers
 
     }
 }

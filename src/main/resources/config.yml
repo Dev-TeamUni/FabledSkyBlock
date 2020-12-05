@@ -129,6 +129,11 @@ Island:
         # Max amount of players allowed to be in a team.
         # Can be increased with Upgrades
         Capacity: 12
+    Hopper:
+        # Max amount of hoppers allowed to be placed on an island.
+        # Can be increased with Upgrades
+        # Ignored if upgrade is disabled.
+        Capacity: 10
     Chat:
         # If island chat should be output to console
         OutputToConsole: true

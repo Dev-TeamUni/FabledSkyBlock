@@ -155,6 +155,8 @@ public final class APIUtil {
                 return IslandUpgrade.SPAWNER;
             case Speed:
                 return IslandUpgrade.SPEED;
+            case Hoppers:
+                return IslandUpgrade.HOPPER;
         }
 
         return null;

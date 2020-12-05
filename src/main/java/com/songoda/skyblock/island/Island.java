@@ -51,6 +51,7 @@ public class Island {
     private IslandStatus status;
     private int size;
     private int maxMembers;
+    private int maxHoppers;
     private boolean deleted = false;
 
     public Island(@Nonnull OfflinePlayer player) {
@@ -62,6 +63,7 @@ public class Island {
         this.ownerUUID = player.getUniqueId();
         this.size = this.plugin.getConfiguration().getInt("Island.Size.Minimum");
         this.maxMembers =  this.plugin.getConfiguration().getInt("Island.Member.Capacity", 3);
+        this.maxHoppers = this.plugin.getConfiguration().getInt("Island.Hopper.Capacity", 10);
 
         if (this.size > 1000) {
             this.size = 50;
@@ -114,6 +116,12 @@ public class Island {
                 maxMembers = configLoad.getInt("MaxMembers");
             } else {
                 configLoad.set("MaxMembers", maxMembers);
+            }
+
+            if (configLoad.getString("MaxHoppers") != null) {
+                maxHoppers = configLoad.getInt("MaxHoppers");
+            } else {
+                configLoad.set("MaxHoppers", maxHoppers);
             }
 
             if (configLoad.getString("Size") != null) {
@@ -325,6 +333,8 @@ public class Island {
                 new File(new File(plugin.getDataFolder().toString() + "/island-data"), ownerUUID.toString() + ".yml"))
                 .getFileConfiguration().set("MaxMembers", maxMembers);
     }
+
+    // TODO: maxhopper getter, setter 만들기
 
     public int getSize() {
         return size;

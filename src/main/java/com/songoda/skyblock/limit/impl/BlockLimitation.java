@@ -110,6 +110,9 @@ public final class BlockLimitation extends EnumLimitation<CompatibleMaterial> {
                 }
             }
             if (material == null) material = type;
+            if (material == CompatibleMaterial.HOPPER) {
+                limit = 0; // TODO: island 객체에서 호퍼 최대갯수 가져오기
+            }
             totalPlaced = island.getLevel().getMaterialAmount(material.name());
         }
 

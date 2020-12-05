@@ -70,6 +70,23 @@ public class UpgradeManager {
             upgradeStorage.put(Upgrade.Type.Members, upgrades);
         }
 
+        if (configLoad.getString("Upgrades.Hoppers") != null) {
+            List<Upgrade> upgrades = new LinkedList<>();
+
+            for (String tierList : configLoad.getConfigurationSection("Upgrades.Hoppers").getKeys(false)) {
+                if (configLoad.getString("Upgrades.Hoppers." + tierList + ".Hoppers") != null) {
+                    if (configLoad.getInt("Upgrades.Members." + tierList + ".Hoppers") > 1000) {
+                        continue;
+                    }
+                }
+
+                upgrades.add(new Upgrade(configLoad.getDouble("Upgrades.Hoppers." + tierList + ".Cost"),
+                    configLoad.getInt("Upgrades.Hoppers." + tierList + ".Value")));
+            }
+
+            upgradeStorage.put(Upgrade.Type.Hoppers, upgrades);
+        }
+
         // Task for applying the speed & jump boost upgrades if the player is on an island that has them
         Bukkit.getScheduler().scheduleSyncRepeatingTask(SkyBlock.getInstance(), this::applyUpgrades, 5L, 20L);
     }

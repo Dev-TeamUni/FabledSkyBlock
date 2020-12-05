@@ -497,7 +497,7 @@ public class Upgrade {
                                 event.setWillDestroy(false);
                             }
                         }
-                    }
+                    } // TODO: Hopper 업그레이드
                 }
             });
 
@@ -886,6 +886,7 @@ public class Upgrade {
                     }
                 }
             }
+            // TODO: Hopper 업그레이드
 
             nInv.setTitle(ChatColor.translateAlternateColorCodes('&', configLoad.getString("Menu.Upgrade.Title")));
             nInv.setRows(1);
