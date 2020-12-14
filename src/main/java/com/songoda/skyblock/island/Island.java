@@ -16,6 +16,7 @@ import com.songoda.skyblock.playerdata.PlayerData;
 import com.songoda.skyblock.sound.SoundManager;
 import com.songoda.skyblock.upgrade.Upgrade;
 import com.songoda.core.utils.NumberUtils;
+import com.songoda.skyblock.upgrade.Upgrade.Type;
 import com.songoda.skyblock.utils.world.WorldBorder;
 import com.songoda.skyblock.visit.Visit;
 import com.songoda.skyblock.world.WorldManager;
@@ -334,7 +335,23 @@ public class Island {
                 .getFileConfiguration().set("MaxMembers", maxMembers);
     }
 
-    // TODO: maxhopper getter, setter 만들기
+    public void setMaxHoppers(int maxHoppers) {
+        if (plugin.getUpgradeManager().getUpgrades(Type.Hoppers) == null) return;
+
+        if (maxHoppers > 100000 || maxHoppers < 0) {
+            maxHoppers = 10;
+        }
+
+        this.maxHoppers = maxHoppers;
+        plugin.getFileManager().getConfig(
+            new File(new File(plugin.getDataFolder().toString() + "/island-data"), ownerUUID.toString() + ".yml"))
+            .getFileConfiguration().set("MaxHoppers", maxHoppers);
+    }
+
+    public int getMaxHoppers() {
+        if (plugin.getUpgradeManager().getUpgrades(Type.Hoppers) == null) return -1;
+        return maxHoppers;
+    }
 
     public int getSize() {
         return size;

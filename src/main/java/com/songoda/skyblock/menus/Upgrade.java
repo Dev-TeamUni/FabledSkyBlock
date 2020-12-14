@@ -497,7 +497,60 @@ public class Upgrade {
                                 event.setWillDestroy(false);
                             }
                         }
-                    } // TODO: Hopper 업그레이드
+                    } else if ((is.getType() == Material.HOPPER) && (is.hasItemMeta())) {
+                        List<com.songoda.skyblock.upgrade.Upgrade> upgrades = upgradeManager
+                            .getUpgrades(com.songoda.skyblock.upgrade.Upgrade.Type.Hoppers);
+
+                        if (upgrades != null && upgrades.size() > 0) {
+                            for (int i = 0; i < upgrades.size(); i++) {
+                                com.songoda.skyblock.upgrade.Upgrade upgrade = upgrades.get(i);
+                                int tier = i + 1;
+
+                                if (is.getItemMeta().getDisplayName()
+                                    .equals(ChatColor.translateAlternateColorCodes('&',
+                                        configLoad.getString("Menu.Upgrade.Item.Hoppers.Displayname")
+                                            .replace("%tier", "" + tier)))) {
+                                    if (upgrade.getValue() > island.getMaxHoppers()
+                                        && upgrade.getValue() != island.getMaxHoppers()) {
+                                        if (economy.hasBalance(player, upgrade.getCost())) {
+                                            messageManager.sendMessage(player,
+                                                configLoad.getString("Island.Upgrade.Bought.Message").replace(
+                                                    "%upgrade", is.getItemMeta().getDisplayName()));
+                                            soundManager.playSound(player, CompatibleSound.ENTITY_PLAYER_LEVELUP.getSound(), 1.0F,
+                                                1.0F);
+
+                                            economy.withdrawBalance(player, upgrade.getCost());
+                                            island.setMaxHoppers(upgrade.getValue());
+
+                                            Bukkit.getServer().getPluginManager().callEvent(new IslandUpgradeEvent(
+                                                island.getAPIWrapper(), player, APIUtil.fromImplementation(
+                                                com.songoda.skyblock.upgrade.Upgrade.Type.Hoppers)));
+
+                                            Bukkit.getServer().getScheduler().runTaskLater(plugin,
+                                                () -> open(player), 1L);
+                                        } else {
+                                            messageManager.sendMessage(player,
+                                                configLoad.getString("Island.Upgrade.Money.Message"));
+                                            soundManager.playSound(player, CompatibleSound.BLOCK_ANVIL_LAND.getSound(), 1.0F,
+                                                1.0F);
+
+                                            event.setWillClose(false);
+                                            event.setWillDestroy(false);
+                                        }
+
+                                        return;
+                                    }
+                                }
+                            }
+
+                            messageManager.sendMessage(player,
+                                configLoad.getString("Island.Upgrade.Claimed.Message"));
+                            soundManager.playSound(player, CompatibleSound.BLOCK_ANVIL_LAND.getSound(), 1.0F, 1.0F);
+
+                            event.setWillClose(false);
+                            event.setWillDestroy(false);
+                        }
+                    }
                 }
             });
 
@@ -886,10 +939,77 @@ public class Upgrade {
                     }
                 }
             }
-            // TODO: Hopper 업그레이드
+
+            if(player.hasPermission("fabledskyblock.upgrade." + com.songoda.skyblock.upgrade.Upgrade.Type.Hoppers.name().toLowerCase())) {
+                upgrades = upgradeManager.getUpgrades(com.songoda.skyblock.upgrade.Upgrade.Type.Hoppers);
+
+                if (upgrades != null && upgrades.size() > 0) {
+                    for (int i = 0; i < upgrades.size(); i++) {
+                        com.songoda.skyblock.upgrade.Upgrade upgrade = upgrades.get(i);
+                        int tier = i + 1;
+
+                        if (tier != upgrades.size()) {
+                            if (upgrade.getValue() <= island.getMaxHoppers()) {
+                                continue;
+                            }
+                        }
+
+                        if (island.getMaxHoppers() >= upgrade.getValue()) {
+                            nInv.addItem(nInv.createItem(new ItemStack(Material.HOPPER),
+                                ChatColor.translateAlternateColorCodes('&',
+                                    configLoad.getString("Menu.Upgrade.Item.Hoppers.Displayname").replace("%tier",
+                                        "" + tier)),
+                                configLoad.getStringList("Menu.Upgrade.Item.Hoppers.Claimed.Lore"),
+                                new Placeholder[]{
+                                    new Placeholder("%cost", NumberUtils.formatNumber(upgrade.getCost())),
+                                    new Placeholder("%tier", "" + tier),
+                                    new Placeholder("%maxHoppers", "" + upgrade.getValue())},
+                                null, null), 9);
+                        } else {
+                            if (economy.hasBalance(player, upgrade.getCost())) {
+                                nInv.addItem(
+                                    nInv.createItem(new ItemStack(Material.HOPPER),
+                                        ChatColor.translateAlternateColorCodes('&',
+                                            configLoad
+                                                .getString("Menu.Upgrade.Item.Hoppers.Displayname")
+                                                .replace("%tier", "" + tier)),
+                                        configLoad.getStringList(
+                                            "Menu.Upgrade.Item.Hoppers.Claimable.Lore"),
+                                        new Placeholder[]{
+                                            new Placeholder("%cost",
+                                                NumberUtils.formatNumber(upgrade.getCost())),
+                                            new Placeholder("%tier", "" + tier),
+                                            new Placeholder("%maxHoppers",
+                                                "" + upgrade.getValue())},
+                                        null, null),
+                                    9);
+                            } else {
+                                nInv.addItem(
+                                    nInv.createItem(new ItemStack(Material.HOPPER),
+                                        ChatColor.translateAlternateColorCodes('&',
+                                            configLoad
+                                                .getString("Menu.Upgrade.Item.Hoppers.Displayname")
+                                                .replace("%tier", "" + tier)),
+                                        configLoad.getStringList(
+                                            "Menu.Upgrade.Item.Hoppers.Unclaimable.Lore"),
+                                        new Placeholder[]{
+                                            new Placeholder("%cost",
+                                                NumberUtils.formatNumber(upgrade.getCost())),
+                                            new Placeholder("%tier", "" + tier),
+                                            new Placeholder("%maxHoppers",
+                                                "" + upgrade.getValue())},
+                                        null, null),
+                                    9);
+                            }
+                        }
+
+                        break;
+                    }
+                }
+            }
 
             nInv.setTitle(ChatColor.translateAlternateColorCodes('&', configLoad.getString("Menu.Upgrade.Title")));
-            nInv.setRows(1);
+            nInv.setRows(2);
             nInv.open();
         }
     }
