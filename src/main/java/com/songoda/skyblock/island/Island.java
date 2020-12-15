@@ -246,6 +246,7 @@ public class Island {
             configLoad.set("Weather.Weather", mainConfigLoad.getString("Island.Weather.Default.Weather").toUpperCase());
             configLoad.set("Ownership.Original", ownerUUID.toString());
             configLoad.set("Size", size);
+            configLoad.set("MaxHoppers", maxHoppers);
 
             for (IslandRole roleList : IslandRole.getRoles()) {
                 List<BasicPermission> allPermissions = plugin.getPermissionManager().getPermissions();
