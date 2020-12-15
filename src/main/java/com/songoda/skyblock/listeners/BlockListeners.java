@@ -323,8 +323,8 @@ public class BlockListeners implements Listener {
 
         long limit = limits.getBlockLimit(player, block.getType());
 
-        if (CompatibleMaterial.getMaterial(block) == CompatibleMaterial.HOPPER && plugin.getUpgradeManager().getUpgrades(Upgrade.Type.Hoppers) != null) {
-            limit = island.getMaxHoppers();
+        if (limit != -1 && CompatibleMaterial.getMaterial(block) == CompatibleMaterial.HOPPER && plugin.getUpgradeManager().getUpgrades(Upgrade.Type.Hoppers) != null) {
+            limit = Math.max(island.getMaxHoppers(), limit);
         }
 
         ItemStack item = event.getItemInHand();
