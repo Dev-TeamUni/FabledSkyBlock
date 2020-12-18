@@ -25,7 +25,7 @@ public class UpgradeManager {
         FileConfiguration configLoad = plugin.getUpgrades();
 
         for (Upgrade.Type typeList : Upgrade.Type.values()) {
-            if (typeList != Upgrade.Type.Size && typeList != Upgrade.Type.Members) {
+            if (typeList != Upgrade.Type.Size && typeList != Upgrade.Type.Members && typeList != Upgrade.Type.Hoppers) {
                 List<Upgrade> upgrades = new ArrayList<>();
 
                 Upgrade upgrade = new Upgrade(configLoad.getDouble("Upgrades." + typeList.name() + ".Cost"));
@@ -68,6 +68,23 @@ public class UpgradeManager {
             }
 
             upgradeStorage.put(Upgrade.Type.Members, upgrades);
+        }
+
+        if (configLoad.getString("Upgrades.Hoppers") != null) {
+            List<Upgrade> upgrades = new LinkedList<>();
+
+            for (String tierList : configLoad.getConfigurationSection("Upgrades.Hoppers").getKeys(false)) {
+                if (configLoad.getString("Upgrades.Hoppers." + tierList + ".Hoppers") != null) {
+                    if (configLoad.getInt("Upgrades.Hoppers." + tierList + ".Hoppers") > 1000) {
+                        continue;
+                    }
+                }
+
+                upgrades.add(new Upgrade(configLoad.getDouble("Upgrades.Hoppers." + tierList + ".Cost"),
+                    configLoad.getInt("Upgrades.Hoppers." + tierList + ".Value")));
+            }
+
+            upgradeStorage.put(Upgrade.Type.Hoppers, upgrades);
         }
 
         // Task for applying the speed & jump boost upgrades if the player is on an island that has them
@@ -117,6 +134,22 @@ public class UpgradeManager {
             configLoad.set("Upgrades.Members." + i + ".Cost", upgrade.getCost());
         }
 
+        if (configLoad.getString("Upgrades.Hoppers") != null) {
+            for (String tierList : configLoad.getConfigurationSection("Upgrades.Hoppers").getKeys(false)) {
+                upgrades.add(new Upgrade(configLoad.getDouble("Upgrades.Hoppers." + tierList + ".Cost"),
+                    configLoad.getInt("Upgrades.Hoppers." + tierList + ".Value")));
+            }
+        }
+
+        upgrades.add(new Upgrade(0, value));
+        configLoad.set("Upgrades.Hoppers", null);
+
+        for (int i = 0; i < upgrades.size(); i++) {
+            Upgrade upgrade = upgrades.get(i);
+            configLoad.set("Upgrades.Hoppers." + i + ".Value", upgrade.getValue());
+            configLoad.set("Upgrades.Hoppers." + i + ".Cost", upgrade.getCost());
+        }
+
         upgradeStorage.put(type, upgrades);
 
         try {
@@ -149,6 +182,14 @@ public class UpgradeManager {
                     Upgrade upgrade = upgrades.get(i);
                     configLoad.set("Upgrades.Members." + i + ".Value", upgrade.getValue());
                     configLoad.set("Upgrades.Members." + i + ".Cost", upgrade.getCost());
+                }
+
+                configLoad.set("Upgrades.Hoppers", null);
+
+                for (int i = 0; i < upgrades.size(); i++) {
+                    Upgrade upgrade = upgrades.get(i);
+                    configLoad.set("Upgrades.Hoppers." + i + ".Value", upgrade.getValue());
+                    configLoad.set("Upgrades.Hoppers." + i + ".Cost", upgrade.getCost());
                 }
 
                 try {

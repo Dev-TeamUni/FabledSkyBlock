@@ -68,6 +68,22 @@ public class Island {
 	}
 
 	/**
+	 * @return The max amount of hoppers allowed to be placed on an island.
+	 */
+	public int getMaxHoppers() {
+		return this.handle.getMaxHoppers();
+	}
+
+	/**
+	 * Set the max amount of hoppers allowed to be placed on an island.
+	 */
+	public void setMaxHoppers(int maxHoppers) {
+		Preconditions.checkArgument(maxHoppers <= 100000, "Cannot set max hoppers to greater than 100000");
+		Preconditions.checkArgument(maxHoppers >= 0, "Cannot set max hoppers to less than 0");
+		this.handle.setMaxHoppers(maxHoppers);
+	}
+
+	/**
 	 * @return The Island radius
 	 */
 	public double getRadius() {

@@ -134,6 +134,8 @@ public final class APIUtil {
                 return Upgrade.Type.Spawner;
             case SPEED:
                 return Upgrade.Type.Speed;
+            case HOPPER:
+                return Upgrade.Type.Hoppers;
         }
 
         return null;
@@ -155,6 +157,8 @@ public final class APIUtil {
                 return IslandUpgrade.SPAWNER;
             case Speed:
                 return IslandUpgrade.SPEED;
+            case Hoppers:
+                return IslandUpgrade.HOPPER;
         }
 
         return null;

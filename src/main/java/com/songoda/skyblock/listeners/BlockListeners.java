@@ -20,6 +20,7 @@ import com.songoda.skyblock.permission.PermissionManager;
 import com.songoda.skyblock.stackable.Stackable;
 import com.songoda.skyblock.stackable.StackableManager;
 import com.songoda.core.utils.NumberUtils;
+import com.songoda.skyblock.upgrade.Upgrade;
 import com.songoda.skyblock.utils.version.CompatibleSpawners;
 import com.songoda.skyblock.utils.version.NMSUtil;
 import com.songoda.skyblock.utils.world.LocationUtil;
@@ -321,6 +322,10 @@ public class BlockListeners implements Listener {
         BlockLimitation limits = plugin.getLimitationHandler().getInstance(BlockLimitation.class);
 
         long limit = limits.getBlockLimit(player, block.getType());
+
+        if (CompatibleMaterial.getMaterial(block) == CompatibleMaterial.HOPPER && plugin.getUpgradeManager().getUpgrades(Upgrade.Type.Hoppers) != null) {
+            limit = Math.max(island.getMaxHoppers(), limit);
+        }
 
         ItemStack item = event.getItemInHand();
 

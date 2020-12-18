@@ -3041,6 +3041,41 @@ Menu:
           - ''
           - '&eClick to %status upgrade!'
         Displayname: '&bLoot Drops'
+      Hoppers:
+        Claimable:
+          Lore:
+            - '&7Increases the max hoppers'
+            - '&7amount of your Island.'
+            - ''
+            - '&7Max hoppers&8: &f%maxHoppers'
+            - '&7Cost&8: &f$%cost'
+            - ''
+            - '&7Status&8: &6&lCLAIMABLE'
+            - ''
+            - '&eClick to unlock this upgrade!'
+        Claimed:
+          Lore:
+            - '&7Increases the max hoppers'
+            - '&7amount of your Island.'
+            - ''
+            - '&7Max hoppers&8: &f%maxHoppers'
+            - '&7Cost&8: &f$%cost'
+            - ''
+            - '&7Status&8: &a&lCLAIMED'
+            - ''
+            - '&cYou have unlocked this upgrade!'
+        Unclaimable:
+          Lore:
+            - '&7Increases the max hoppers'
+            - '&7amount of your Island.'
+            - ''
+            - '&7Max hoppers&8: &f%maxHoppers'
+            - '&7Cost&8: &f$%cost'
+            - ''
+            - '&7Status&8: &c&lLOCKED'
+            - ''
+            - '&cYou don''t have enough money!'
+        Displayname: '&bMax Hoppers [Tier #%tier]'
     Title: '&8Island Upgrade'
   Rollback:
     Item:

@@ -43,3 +43,13 @@ Upgrades:
     Spawner:
         Enable: true
         Cost: 100000
+    Hoppers:
+        0:
+            Value: 100
+            Cost: 10000
+        1:
+            Value: 250
+            Cost: 20000
+        2:
+            Value: 500
+            Cost: 30000
