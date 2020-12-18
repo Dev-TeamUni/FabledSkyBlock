@@ -16,6 +16,7 @@ import com.songoda.skyblock.playerdata.PlayerData;
 import com.songoda.skyblock.sound.SoundManager;
 import com.songoda.skyblock.upgrade.Upgrade;
 import com.songoda.core.utils.NumberUtils;
+import com.songoda.skyblock.upgrade.Upgrade.Type;
 import com.songoda.skyblock.utils.world.WorldBorder;
 import com.songoda.skyblock.visit.Visit;
 import com.songoda.skyblock.world.WorldManager;
@@ -51,6 +52,7 @@ public class Island {
     private IslandStatus status;
     private int size;
     private int maxMembers;
+    private int maxHoppers;
     private boolean deleted = false;
 
     public Island(@Nonnull OfflinePlayer player) {
@@ -62,6 +64,7 @@ public class Island {
         this.ownerUUID = player.getUniqueId();
         this.size = this.plugin.getConfiguration().getInt("Island.Size.Minimum");
         this.maxMembers =  this.plugin.getConfiguration().getInt("Island.Member.Capacity", 3);
+        this.maxHoppers = this.plugin.getConfiguration().getInt("Island.Hopper.Capacity", 10);
 
         if (this.size > 1000) {
             this.size = 50;
@@ -114,6 +117,12 @@ public class Island {
                 maxMembers = configLoad.getInt("MaxMembers");
             } else {
                 configLoad.set("MaxMembers", maxMembers);
+            }
+
+            if (configLoad.getString("MaxHoppers") != null) {
+                maxHoppers = configLoad.getInt("MaxHoppers");
+            } else {
+                configLoad.set("MaxHoppers", maxHoppers);
             }
 
             if (configLoad.getString("Size") != null) {
@@ -237,6 +246,7 @@ public class Island {
             configLoad.set("Weather.Weather", mainConfigLoad.getString("Island.Weather.Default.Weather").toUpperCase());
             configLoad.set("Ownership.Original", ownerUUID.toString());
             configLoad.set("Size", size);
+            configLoad.set("MaxHoppers", maxHoppers);
 
             for (IslandRole roleList : IslandRole.getRoles()) {
                 List<BasicPermission> allPermissions = plugin.getPermissionManager().getPermissions();
@@ -324,6 +334,24 @@ public class Island {
         plugin.getFileManager().getConfig(
                 new File(new File(plugin.getDataFolder().toString() + "/island-data"), ownerUUID.toString() + ".yml"))
                 .getFileConfiguration().set("MaxMembers", maxMembers);
+    }
+
+    public void setMaxHoppers(int maxHoppers) {
+        if (plugin.getUpgradeManager().getUpgrades(Type.Hoppers) == null) return;
+
+        if (maxHoppers > 100000 || maxHoppers < 0) {
+            maxHoppers = 10;
+        }
+
+        this.maxHoppers = maxHoppers;
+        plugin.getFileManager().getConfig(
+            new File(new File(plugin.getDataFolder().toString() + "/island-data"), ownerUUID.toString() + ".yml"))
+            .getFileConfiguration().set("MaxHoppers", maxHoppers);
+    }
+
+    public int getMaxHoppers() {
+        if (plugin.getUpgradeManager().getUpgrades(Type.Hoppers) == null) return -1;
+        return maxHoppers;
     }
 
     public int getSize() {
