@@ -53,3 +53,15 @@ Upgrades:
         2:
             Value: 500
             Cost: 30000
+Gui:
+    Row: 1
+    Slot:
+        Speed: 0
+        Jump: 1
+        Crop: 2
+        Fly: 3
+        Drops: 4
+        Size: 5
+        Members: 6
+        Spawner: 7
+        Hoppers: 8
