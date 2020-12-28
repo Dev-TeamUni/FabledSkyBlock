@@ -57,6 +57,7 @@ public class Upgrade {
         Economy economy = plugin.getEconomyManager().getEconomy();
 
         FileConfiguration configLoad = plugin.getLanguage();
+        FileConfiguration upgradeConfigLoad = plugin.getUpgrades();
 
         if (!economy.isEnabled()) {
             messageManager.sendMessage(player, configLoad.getString("Island.Upgrade.Disabled.Message"));
@@ -559,6 +560,11 @@ public class Upgrade {
             ItemStack potion = new ItemStack(Material.POTION);
             int NMSVersion = NMSUtil.getVersionNumber();
 
+            int row = upgradeConfigLoad.getInt("Gui.Row");
+            if (row <= 0 || row > 6) {
+                row = 6;
+            }
+
             if(player.hasPermission("fabledskyblock.upgrade." + com.songoda.skyblock.upgrade.Upgrade.Type.Speed.name().toLowerCase())) {
                 upgrades = upgradeManager.getUpgrades(com.songoda.skyblock.upgrade.Upgrade.Type.Speed);
     
@@ -578,6 +584,11 @@ public class Upgrade {
                     } else {
                         potion = new ItemStack(Material.POTION, 1, (short) 8194);
                     }
+
+                    int slot = upgradeConfigLoad.getInt("Gui.Slot.Speed");
+                    if (slot < 0 || slot >= row * 9) {
+                        slot = 0;
+                    }
         
                     if (island.hasUpgrade(com.songoda.skyblock.upgrade.Upgrade.Type.Speed)) {
                         nInv.addItem(nInv.createItem(potion,
@@ -588,7 +599,7 @@ public class Upgrade {
                                         new Placeholder("%cost", NumberUtils.formatNumber(upgrade.getCost())),
                                         new Placeholder("%status",
                                                 getStatus(island, com.songoda.skyblock.upgrade.Upgrade.Type.Speed))},
-                                null, new ItemFlag[]{ItemFlag.HIDE_POTION_EFFECTS}), 0);
+                                null, new ItemFlag[]{ItemFlag.HIDE_POTION_EFFECTS}), slot);
                     } else {
                         if (economy.hasBalance(player, upgrade.getCost())) {
                             nInv.addItem(nInv.createItem(potion,
@@ -597,7 +608,7 @@ public class Upgrade {
                                     configLoad.getStringList("Menu.Upgrade.Item.Speed.Claimable.Lore"),
                                     new Placeholder[]{
                                             new Placeholder("%cost", NumberUtils.formatNumber(upgrade.getCost()))},
-                                    null, new ItemFlag[]{ItemFlag.HIDE_POTION_EFFECTS}), 0);
+                                    null, new ItemFlag[]{ItemFlag.HIDE_POTION_EFFECTS}), slot);
                         } else {
                             nInv.addItem(nInv.createItem(potion,
                                     ChatColor.translateAlternateColorCodes('&',
@@ -605,7 +616,7 @@ public class Upgrade {
                                     configLoad.getStringList("Menu.Upgrade.Item.Speed.Unclaimable.Lore"),
                                     new Placeholder[]{
                                             new Placeholder("%cost", NumberUtils.formatNumber(upgrade.getCost()))},
-                                    null, new ItemFlag[]{ItemFlag.HIDE_POTION_EFFECTS}), 0);
+                                    null, new ItemFlag[]{ItemFlag.HIDE_POTION_EFFECTS}), slot);
                         }
                     }
                 }
@@ -631,7 +642,12 @@ public class Upgrade {
                     } else {
                         potion = new ItemStack(Material.POTION, 1, (short) 8203);
                     }
-        
+
+                    int slot = upgradeConfigLoad.getInt("Gui.Slot.Jump");
+                    if (slot < 0 || slot >= row * 9) {
+                        slot = 0;
+                    }
+
                     if (island.hasUpgrade(com.songoda.skyblock.upgrade.Upgrade.Type.Jump)) {
                         nInv.addItem(nInv.createItem(potion,
                                 ChatColor.translateAlternateColorCodes('&',
@@ -641,7 +657,7 @@ public class Upgrade {
                                         new Placeholder("%cost", NumberUtils.formatNumber(upgrade.getCost())),
                                         new Placeholder("%status",
                                                 getStatus(island, com.songoda.skyblock.upgrade.Upgrade.Type.Jump))},
-                                null, new ItemFlag[]{ItemFlag.HIDE_POTION_EFFECTS}), 1);
+                                null, new ItemFlag[]{ItemFlag.HIDE_POTION_EFFECTS}), slot);
                     } else {
                         if (economy.hasBalance(player, upgrade.getCost())) {
                             nInv.addItem(nInv.createItem(potion,
@@ -650,7 +666,7 @@ public class Upgrade {
                                     configLoad.getStringList("Menu.Upgrade.Item.Jump.Claimable.Lore"),
                                     new Placeholder[]{
                                             new Placeholder("%cost", NumberUtils.formatNumber(upgrade.getCost()))},
-                                    null, new ItemFlag[]{ItemFlag.HIDE_POTION_EFFECTS}), 1);
+                                    null, new ItemFlag[]{ItemFlag.HIDE_POTION_EFFECTS}), slot);
                         } else {
                             nInv.addItem(nInv.createItem(potion,
                                     ChatColor.translateAlternateColorCodes('&',
@@ -658,7 +674,7 @@ public class Upgrade {
                                     configLoad.getStringList("Menu.Upgrade.Item.Jump.Unclaimable.Lore"),
                                     new Placeholder[]{
                                             new Placeholder("%cost", NumberUtils.formatNumber(upgrade.getCost()))},
-                                    null, new ItemFlag[]{ItemFlag.HIDE_POTION_EFFECTS}), 1);
+                                    null, new ItemFlag[]{ItemFlag.HIDE_POTION_EFFECTS}), slot);
                         }
                     }
                 }
@@ -669,7 +685,12 @@ public class Upgrade {
     
                 if (upgrades != null && upgrades.size() > 0 && upgrades.get(0).isEnabled()) {
                     com.songoda.skyblock.upgrade.Upgrade upgrade = upgrades.get(0);
-        
+
+                    int slot = upgradeConfigLoad.getInt("Gui.Slot.Crop");
+                    if (slot < 0 || slot >= row * 9) {
+                        slot = 0;
+                    }
+
                     if (island.hasUpgrade(com.songoda.skyblock.upgrade.Upgrade.Type.Crop)) {
                         nInv.addItem(nInv.createItem(CompatibleMaterial.WHEAT_SEEDS.getItem(),
                                 ChatColor.translateAlternateColorCodes('&',
@@ -679,7 +700,7 @@ public class Upgrade {
                                         new Placeholder("%cost", NumberUtils.formatNumber(upgrade.getCost())),
                                         new Placeholder("%status",
                                                 getStatus(island, com.songoda.skyblock.upgrade.Upgrade.Type.Crop))},
-                                null, null), 3);
+                                null, null), slot);
                     } else {
                         if (economy.hasBalance(player, upgrade.getCost())) {
                             nInv.addItem(nInv.createItem(CompatibleMaterial.WHEAT_SEEDS.getItem(),
@@ -688,7 +709,7 @@ public class Upgrade {
                                     configLoad.getStringList("Menu.Upgrade.Item.Crop.Claimable.Lore"),
                                     new Placeholder[]{
                                             new Placeholder("%cost", NumberUtils.formatNumber(upgrade.getCost()))},
-                                    null, null), 3);
+                                    null, null), slot);
                         } else {
                             nInv.addItem(nInv.createItem(CompatibleMaterial.WHEAT_SEEDS.getItem(),
                                     ChatColor.translateAlternateColorCodes('&',
@@ -696,7 +717,7 @@ public class Upgrade {
                                     configLoad.getStringList("Menu.Upgrade.Item.Crop.Unclaimable.Lore"),
                                     new Placeholder[]{
                                             new Placeholder("%cost", NumberUtils.formatNumber(upgrade.getCost()))},
-                                    null, null), 3);
+                                    null, null), slot);
                         }
                     }
                 }
@@ -707,7 +728,12 @@ public class Upgrade {
     
                 if (upgrades != null && upgrades.size() > 0 && upgrades.get(0).isEnabled()) {
                     com.songoda.skyblock.upgrade.Upgrade upgrade = upgrades.get(0);
-        
+
+                    int slot = upgradeConfigLoad.getInt("Gui.Slot.Fly");
+                    if (slot < 0 || slot >= row * 9) {
+                        slot = 0;
+                    }
+
                     if (island.hasUpgrade(com.songoda.skyblock.upgrade.Upgrade.Type.Fly)) {
                         nInv.addItem(nInv.createItem(new ItemStack(Material.FEATHER),
                                 ChatColor.translateAlternateColorCodes('&',
@@ -717,7 +743,7 @@ public class Upgrade {
                                         new Placeholder("%cost", NumberUtils.formatNumber(upgrade.getCost())),
                                         new Placeholder("%status",
                                                 getStatus(island, com.songoda.skyblock.upgrade.Upgrade.Type.Fly))},
-                                null, null), 4);
+                                null, null), slot);
                     } else {
                         if (economy.hasBalance(player, upgrade.getCost())) {
                             nInv.addItem(nInv.createItem(new ItemStack(Material.FEATHER),
@@ -726,7 +752,7 @@ public class Upgrade {
                                     configLoad.getStringList("Menu.Upgrade.Item.Fly.Claimable.Lore"),
                                     new Placeholder[]{
                                             new Placeholder("%cost", NumberUtils.formatNumber(upgrade.getCost()))},
-                                    null, null), 4);
+                                    null, null), slot);
                         } else {
                             nInv.addItem(nInv.createItem(new ItemStack(Material.FEATHER),
                                     ChatColor.translateAlternateColorCodes('&',
@@ -734,7 +760,7 @@ public class Upgrade {
                                     configLoad.getStringList("Menu.Upgrade.Item.Fly.Unclaimable.Lore"),
                                     new Placeholder[]{
                                             new Placeholder("%cost", NumberUtils.formatNumber(upgrade.getCost()))},
-                                    null, null), 4);
+                                    null, null), slot);
                         }
                     }
                 }
@@ -745,7 +771,12 @@ public class Upgrade {
     
                 if (upgrades != null && upgrades.size() > 0 && upgrades.get(0).isEnabled()) {
                     com.songoda.skyblock.upgrade.Upgrade upgrade = upgrades.get(0);
-        
+
+                    int slot = upgradeConfigLoad.getInt("Gui.Slot.Drops");
+                    if (slot < 0 || slot >= row * 9) {
+                        slot = 0;
+                    }
+
                     if (island.hasUpgrade(com.songoda.skyblock.upgrade.Upgrade.Type.Drops)) {
                         nInv.addItem(nInv.createItem(new ItemStack(Material.SPIDER_EYE),
                                 ChatColor.translateAlternateColorCodes('&',
@@ -755,7 +786,7 @@ public class Upgrade {
                                         new Placeholder("%cost", NumberUtils.formatNumber(upgrade.getCost())),
                                         new Placeholder("%status",
                                                 getStatus(island, com.songoda.skyblock.upgrade.Upgrade.Type.Drops))},
-                                null, null), 5);
+                                null, null), slot);
                     } else {
                         if (economy.hasBalance(player, upgrade.getCost())) {
                             nInv.addItem(nInv.createItem(new ItemStack(Material.SPIDER_EYE),
@@ -764,7 +795,7 @@ public class Upgrade {
                                     configLoad.getStringList("Menu.Upgrade.Item.Drops.Claimable.Lore"),
                                     new Placeholder[]{
                                             new Placeholder("%cost", NumberUtils.formatNumber(upgrade.getCost()))},
-                                    null, null), 5);
+                                    null, null), slot);
                         } else {
                             nInv.addItem(nInv.createItem(new ItemStack(Material.SPIDER_EYE),
                                     ChatColor.translateAlternateColorCodes('&',
@@ -772,7 +803,7 @@ public class Upgrade {
                                     configLoad.getStringList("Menu.Upgrade.Item.Drops.Unclaimable.Lore"),
                                     new Placeholder[]{
                                             new Placeholder("%cost", NumberUtils.formatNumber(upgrade.getCost()))},
-                                    null, null), 5);
+                                    null, null), slot);
                         }
                     }
                 }
@@ -791,7 +822,12 @@ public class Upgrade {
                                 continue;
                             }
                         }
-            
+
+                        int slot = upgradeConfigLoad.getInt("Gui.Slot.Members");
+                        if (slot < 0 || slot >= row * 9) {
+                            slot = 0;
+                        }
+
                         if (island.getMaxMembers(player) >= upgrade.getValue()) {
                             nInv.addItem(nInv.createItem(new ItemStack(Material.BOOKSHELF),
                                     ChatColor.translateAlternateColorCodes('&',
@@ -802,7 +838,7 @@ public class Upgrade {
                                             new Placeholder("%cost", NumberUtils.formatNumber(upgrade.getCost())),
                                             new Placeholder("%tier", "" + tier),
                                             new Placeholder("%maxMembers", "" + upgrade.getValue())},
-                                    null, null), 6);
+                                    null, null), slot);
                         } else {
                             if (economy.hasBalance(player, upgrade.getCost())) {
                                 nInv.addItem(
@@ -817,7 +853,7 @@ public class Upgrade {
                                                         new Placeholder("%tier", "" + tier),
                                                         new Placeholder("%maxMembers", "" + upgrade.getValue())},
                                                 null, null),
-                                        6);
+                                        slot);
                             } else {
                                 nInv.addItem(
                                         nInv.createItem(new ItemStack(Material.BOOKSHELF),
@@ -831,7 +867,7 @@ public class Upgrade {
                                                         new Placeholder("%tier", "" + tier),
                                                         new Placeholder("%maxMembers", "" + upgrade.getValue())},
                                                 null, null),
-                                        6);
+                                        slot);
                             }
                         }
             
@@ -853,7 +889,12 @@ public class Upgrade {
                                 continue;
                             }
                         }
-            
+
+                        int slot = upgradeConfigLoad.getInt("Gui.Slot.Size");
+                        if (slot < 0 || slot >= row * 9) {
+                            slot = 0;
+                        }
+
                         if (island.getSize() >= upgrade.getValue()) {
                             nInv.addItem(nInv.createItem(new ItemStack(Material.BEACON),
                                     ChatColor.translateAlternateColorCodes('&',
@@ -864,7 +905,7 @@ public class Upgrade {
                                             new Placeholder("%cost", NumberUtils.formatNumber(upgrade.getCost())),
                                             new Placeholder("%tier", "" + tier),
                                             new Placeholder("%size", "" + upgrade.getValue())},
-                                    null, null), 7);
+                                    null, null), slot);
                         } else {
                             if (economy.hasBalance(player, upgrade.getCost())) {
                                 nInv.addItem(
@@ -879,7 +920,7 @@ public class Upgrade {
                                                         new Placeholder("%tier", "" + tier),
                                                         new Placeholder("%size", "" + upgrade.getValue())},
                                                 null, null),
-                                        7);
+                                        slot);
                             } else {
                                 nInv.addItem(
                                         nInv.createItem(new ItemStack(Material.BEACON),
@@ -893,7 +934,7 @@ public class Upgrade {
                                                         new Placeholder("%tier", "" + tier),
                                                         new Placeholder("%size", "" + upgrade.getValue())},
                                                 null, null),
-                                        7);
+                                        slot);
                             }
                         }
             
@@ -907,7 +948,12 @@ public class Upgrade {
     
                 if (upgrades != null && upgrades.size() > 0 && upgrades.get(0).isEnabled()) {
                     com.songoda.skyblock.upgrade.Upgrade upgrade = upgrades.get(0);
-        
+
+                    int slot = upgradeConfigLoad.getInt("Gui.Slot.Spawner");
+                    if (slot < 0 || slot >= row * 9) {
+                        slot = 0;
+                    }
+
                     if (island.hasUpgrade(com.songoda.skyblock.upgrade.Upgrade.Type.Spawner)) {
                         nInv.addItem(nInv.createItem(CompatibleMaterial.SPAWNER.getItem(),
                                 ChatColor.translateAlternateColorCodes('&',
@@ -917,7 +963,7 @@ public class Upgrade {
                                         new Placeholder("%cost", NumberUtils.formatNumber(upgrade.getCost())),
                                         new Placeholder("%status",
                                                 getStatus(island, com.songoda.skyblock.upgrade.Upgrade.Type.Spawner))},
-                                null, null), 8);
+                                null, null), slot);
                     } else {
                         if (economy.hasBalance(player, upgrade.getCost())) {
                             nInv.addItem(nInv.createItem(CompatibleMaterial.SPAWNER.getItem(),
@@ -926,7 +972,7 @@ public class Upgrade {
                                     configLoad.getStringList("Menu.Upgrade.Item.Spawner.Claimable.Lore"),
                                     new Placeholder[]{
                                             new Placeholder("%cost", NumberUtils.formatNumber(upgrade.getCost()))},
-                                    null, null), 8);
+                                    null, null), slot);
                         } else {
                             nInv.addItem(nInv.createItem(CompatibleMaterial.SPAWNER.getItem(),
                                     ChatColor.translateAlternateColorCodes('&',
@@ -934,7 +980,7 @@ public class Upgrade {
                                     configLoad.getStringList("Menu.Upgrade.Item.Spawner.Unclaimable.Lore"),
                                     new Placeholder[]{
                                             new Placeholder("%cost", NumberUtils.formatNumber(upgrade.getCost()))},
-                                    null, null), 8);
+                                    null, null), slot);
                         }
                     }
                 }
@@ -954,6 +1000,11 @@ public class Upgrade {
                             }
                         }
 
+                        int slot = upgradeConfigLoad.getInt("Gui.Slot.Hoppers");
+                        if (slot < 0 || slot >= row * 9) {
+                            slot = 0;
+                        }
+
                         if (island.getMaxHoppers() >= upgrade.getValue()) {
                             nInv.addItem(nInv.createItem(new ItemStack(Material.HOPPER),
                                 ChatColor.translateAlternateColorCodes('&',
@@ -964,7 +1015,7 @@ public class Upgrade {
                                     new Placeholder("%cost", NumberUtils.formatNumber(upgrade.getCost())),
                                     new Placeholder("%tier", "" + tier),
                                     new Placeholder("%maxHoppers", "" + upgrade.getValue())},
-                                null, null), 9);
+                                null, null), slot);
                         } else {
                             if (economy.hasBalance(player, upgrade.getCost())) {
                                 nInv.addItem(
@@ -982,7 +1033,7 @@ public class Upgrade {
                                             new Placeholder("%maxHoppers",
                                                 "" + upgrade.getValue())},
                                         null, null),
-                                    9);
+                                    slot);
                             } else {
                                 nInv.addItem(
                                     nInv.createItem(new ItemStack(Material.HOPPER),
@@ -999,7 +1050,7 @@ public class Upgrade {
                                             new Placeholder("%maxHoppers",
                                                 "" + upgrade.getValue())},
                                         null, null),
-                                    9);
+                                    slot);
                             }
                         }
 
@@ -1009,7 +1060,7 @@ public class Upgrade {
             }
 
             nInv.setTitle(ChatColor.translateAlternateColorCodes('&', configLoad.getString("Menu.Upgrade.Title")));
-            nInv.setRows(2);
+            nInv.setRows(row);
             nInv.open();
         }
     }
