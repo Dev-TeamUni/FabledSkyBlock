@@ -13,7 +13,7 @@
 	</properties>
 	<build>
 		<defaultGoal>clean install</defaultGoal>
-		<finalName>FabledSkyblock-${project.version}</finalName>
+		<finalName>FabledSkyblock-TeamUni-${project.version}</finalName>
 		<resources>
 			<resource>
 				<directory>src/main/resources</directory>
