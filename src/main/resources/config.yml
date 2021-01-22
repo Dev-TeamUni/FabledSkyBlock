@@ -362,6 +362,8 @@ Island:
         Async: true
     Generator:
         Enable: true
+        # Use fence generator
+        UseFence: true
         # Check only the island owner's permissions
         # it requires Vault installed
         # Experimental feature!
