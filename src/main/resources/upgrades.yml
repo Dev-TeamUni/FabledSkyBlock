@@ -53,6 +53,13 @@ Upgrades:
         2:
             Value: 500
             Cost: 30000
+    Generator:
+        0:
+            Value: Normal_1
+            Cost: 10000
+        1:
+            Value: Normal_2
+            Cost: 20000
 Gui:
     Row: 1
     Slot:

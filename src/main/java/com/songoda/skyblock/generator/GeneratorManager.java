@@ -95,7 +95,7 @@ public class GeneratorManager {
 
                 Block from1 = block.getRelative(blockFace1);
                 Block from2 = block.getRelative(blockFace2);
-                if (isLava(from1) && isWater(from2) && isFlowingTowardsBlock(from2))
+                if (isLava(from1) && isWater(from2) && isFlowingTowardsBlock(from2)) // TODO add fence generator
                     return true;
             }
         }

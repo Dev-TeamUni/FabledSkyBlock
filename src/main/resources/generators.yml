@@ -17,6 +17,42 @@ Generators:
                 Chance: 5.5
             DIAMOND_ORE:
                 Chance: 2.5
+    Normal_1:
+        Name: Normal_1
+        World: Normal
+        Permission: false
+        UnlockLevel: 15
+        Materials:
+            COBBLESTONE:
+                Chance: 55
+            COAL_ORE:
+                Chance: 15.5
+            IRON_ORE:
+                Chance: 10.5
+            GOLD_ORE:
+                Chance: 9
+            EMERALD_ORE:
+                Chance: 6.5
+            DIAMOND_ORE:
+                Chance: 3.5
+    Normal_2:
+        Name: Normal_2
+        World: Normal
+        Permission: false
+        UnlockLevel: 30
+        Materials:
+            COBBLESTONE:
+                Chance: 50
+            COAL_ORE:
+                Chance: 15.5
+            IRON_ORE:
+                Chance: 11.5
+            GOLD_ORE:
+                Chance: 10
+            EMERALD_ORE:
+                Chance: 7.5
+            DIAMOND_ORE:
+                Chance: 5.5
     Nether:
         Name: Nether
         World: Nether

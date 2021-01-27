@@ -4,6 +4,7 @@ import com.songoda.skyblock.SkyBlock;
 import com.songoda.skyblock.config.FileManager.Config;
 import com.songoda.skyblock.island.Island;
 import com.songoda.skyblock.island.IslandManager;
+import com.songoda.skyblock.upgrade.Upgrade.Type;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -74,17 +75,22 @@ public class UpgradeManager {
             List<Upgrade> upgrades = new LinkedList<>();
 
             for (String tierList : configLoad.getConfigurationSection("Upgrades.Hoppers").getKeys(false)) {
-                if (configLoad.getString("Upgrades.Hoppers." + tierList + ".Hoppers") != null) {
-                    if (configLoad.getInt("Upgrades.Hoppers." + tierList + ".Hoppers") > 1000) {
-                        continue;
-                    }
-                }
-
                 upgrades.add(new Upgrade(configLoad.getDouble("Upgrades.Hoppers." + tierList + ".Cost"),
                     configLoad.getInt("Upgrades.Hoppers." + tierList + ".Value")));
             }
 
             upgradeStorage.put(Upgrade.Type.Hoppers, upgrades);
+        }
+
+        if (configLoad.getString("Upgrades.Generator") != null) {
+            List<Upgrade> upgrades = new LinkedList<>();
+
+            for (String tierList : configLoad.getConfigurationSection("Upgrades.Generator").getKeys(false)) {
+                upgrades.add(new Upgrade(configLoad.getDouble("Upgrades.Generator." + tierList + ".Cost"),
+                    configLoad.getString("Upgrades.Generator." + tierList + ".Value")));
+            }
+
+            upgradeStorage.put(Upgrade.Type.Generator, upgrades);
         }
 
         // Task for applying the speed & jump boost upgrades if the player is on an island that has them
