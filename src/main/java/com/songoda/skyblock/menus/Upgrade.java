@@ -7,6 +7,7 @@ import com.songoda.skyblock.SkyBlock;
 import com.songoda.skyblock.api.event.island.IslandUpgradeEvent;
 import com.songoda.skyblock.api.utils.APIUtil;
 import com.songoda.skyblock.config.FileManager;
+import com.songoda.skyblock.generator.GeneratorManager;
 import com.songoda.skyblock.island.Island;
 import com.songoda.skyblock.island.IslandManager;
 import com.songoda.skyblock.message.MessageManager;
@@ -551,6 +552,59 @@ public class Upgrade {
                             event.setWillClose(false);
                             event.setWillDestroy(false);
                         }
+                    } else if ((is.getType() == Material.DIAMOND_ORE) && (is.hasItemMeta())) {
+                        List<com.songoda.skyblock.upgrade.Upgrade> upgrades = upgradeManager
+                            .getUpgrades(com.songoda.skyblock.upgrade.Upgrade.Type.Generator);
+                        int nowTier = upgradeManager.getGeneratorTier(island.getGenerator());
+
+                        if (upgrades != null && upgrades.size() > 0) {
+                            for (int i = 0; i < upgrades.size(); i++) {
+                                com.songoda.skyblock.upgrade.Upgrade upgrade = upgrades.get(i);
+                                int tier = i + 1;
+
+                                if (is.getItemMeta().getDisplayName()
+                                    .equals(ChatColor.translateAlternateColorCodes('&',
+                                        configLoad.getString("Menu.Upgrade.Item.Generator.Displayname")
+                                            .replace("%tier", "" + tier)))) {
+                                    if (upgrade.getValue() > nowTier && upgrade.getValue() != nowTier) {
+                                        if (economy.hasBalance(player, upgrade.getCost())) {
+                                            messageManager.sendMessage(player,
+                                                configLoad.getString("Island.Upgrade.Bought.Message").replace(
+                                                    "%upgrade", is.getItemMeta().getDisplayName()));
+                                            soundManager.playSound(player, CompatibleSound.ENTITY_PLAYER_LEVELUP.getSound(), 1.0F,
+                                                1.0F);
+
+                                            economy.withdrawBalance(player, upgrade.getCost());
+                                            island.setGenerator(upgrade.getStrValue());
+
+                                            Bukkit.getServer().getPluginManager().callEvent(new IslandUpgradeEvent(
+                                                island.getAPIWrapper(), player, APIUtil.fromImplementation(
+                                                com.songoda.skyblock.upgrade.Upgrade.Type.Generator)));
+
+                                            Bukkit.getServer().getScheduler().runTaskLater(plugin,
+                                                () -> open(player), 1L);
+                                        } else {
+                                            messageManager.sendMessage(player,
+                                                configLoad.getString("Island.Upgrade.Money.Message"));
+                                            soundManager.playSound(player, CompatibleSound.BLOCK_ANVIL_LAND.getSound(), 1.0F,
+                                                1.0F);
+
+                                            event.setWillClose(false);
+                                            event.setWillDestroy(false);
+                                        }
+
+                                        return;
+                                    }
+                                }
+                            }
+
+                            messageManager.sendMessage(player,
+                                configLoad.getString("Island.Upgrade.Claimed.Message"));
+                            soundManager.playSound(player, CompatibleSound.BLOCK_ANVIL_LAND.getSound(), 1.0F, 1.0F);
+
+                            event.setWillClose(false);
+                            event.setWillDestroy(false);
+                        }
                     }
                 }
             });
@@ -1049,6 +1103,75 @@ public class Upgrade {
                                             new Placeholder("%tier", "" + tier),
                                             new Placeholder("%maxHoppers",
                                                 "" + upgrade.getValue())},
+                                        null, null),
+                                    slot);
+                            }
+                        }
+
+                        break;
+                    }
+                }
+            }
+
+            if(player.hasPermission("fabledskyblock.upgrade." + com.songoda.skyblock.upgrade.Upgrade.Type.Generator.name().toLowerCase())) {
+                upgrades = upgradeManager.getUpgrades(com.songoda.skyblock.upgrade.Upgrade.Type.Generator);
+                double nowTier = upgradeManager.getGeneratorTier(island.getGenerator());
+
+                if (upgrades != null && upgrades.size() > 0) {
+                    for (int i = 0; i < upgrades.size(); i++) {
+                        com.songoda.skyblock.upgrade.Upgrade upgrade = upgrades.get(i);
+                        int tier = i + 1;
+
+                        if (tier != upgrades.size()) {
+                            if (upgrade.getValue() <= nowTier) {
+                                continue;
+                            }
+                        }
+
+                        int slot = upgradeConfigLoad.getInt("Gui.Slot.Generator");
+                        if (slot < 0 || slot >= row * 9) {
+                            slot = 0;
+                        }
+
+                        if (nowTier >= upgrade.getValue()) {
+                            nInv.addItem(nInv.createItem(new ItemStack(Material.DIAMOND_ORE),
+                                ChatColor.translateAlternateColorCodes('&',
+                                    configLoad.getString("Menu.Upgrade.Item.Generator.Displayname").replace("%tier",
+                                        "" + tier)),
+                                configLoad.getStringList("Menu.Upgrade.Item.Generator.Claimed.Lore"),
+                                new Placeholder[]{
+                                    new Placeholder("%cost", NumberUtils.formatNumber(upgrade.getCost())),
+                                    new Placeholder("%tier", "" + tier)},
+                                null, null), slot);
+                        } else {
+                            if (economy.hasBalance(player, upgrade.getCost())) {
+                                nInv.addItem(
+                                    nInv.createItem(new ItemStack(Material.DIAMOND_ORE),
+                                        ChatColor.translateAlternateColorCodes('&',
+                                            configLoad
+                                                .getString("Menu.Upgrade.Item.Generator.Displayname")
+                                                .replace("%tier", "" + tier)),
+                                        configLoad.getStringList(
+                                            "Menu.Upgrade.Item.Generator.Claimable.Lore"),
+                                        new Placeholder[]{
+                                            new Placeholder("%cost",
+                                                NumberUtils.formatNumber(upgrade.getCost())),
+                                            new Placeholder("%tier", "" + tier)},
+                                        null, null),
+                                    slot);
+                            } else {
+                                nInv.addItem(
+                                    nInv.createItem(new ItemStack(Material.DIAMOND_ORE),
+                                        ChatColor.translateAlternateColorCodes('&',
+                                            configLoad
+                                                .getString("Menu.Upgrade.Item.Generator.Displayname")
+                                                .replace("%tier", "" + tier)),
+                                        configLoad.getStringList(
+                                            "Menu.Upgrade.Item.Generator.Unclaimable.Lore"),
+                                        new Placeholder[]{
+                                            new Placeholder("%cost",
+                                                NumberUtils.formatNumber(upgrade.getCost())),
+                                            new Placeholder("%tier", "" + tier)},
                                         null, null),
                                     slot);
                             }

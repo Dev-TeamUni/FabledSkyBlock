@@ -16,9 +16,10 @@ public class Upgrade {
         this.value = value;
     }
 
-    public Upgrade(double cost, String value) {
+    public Upgrade(double cost, int value, String value2) {
         this.cost = cost;
-        this.strValue = value;
+        this.value = value;
+        this.strValue = value2;
     }
 
     public double getCost() {

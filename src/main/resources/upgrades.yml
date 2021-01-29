@@ -61,7 +61,7 @@ Upgrades:
             Value: Normal_2
             Cost: 20000
 Gui:
-    Row: 1
+    Row: 2
     Slot:
         Speed: 0
         Jump: 1
@@ -72,3 +72,4 @@ Gui:
         Members: 6
         Spawner: 7
         Hoppers: 8
+        Generator: 9

@@ -86,7 +86,7 @@ public class UpgradeManager {
             List<Upgrade> upgrades = new LinkedList<>();
 
             for (String tierList : configLoad.getConfigurationSection("Upgrades.Generator").getKeys(false)) {
-                upgrades.add(new Upgrade(configLoad.getDouble("Upgrades.Generator." + tierList + ".Cost"),
+                upgrades.add(new Upgrade(configLoad.getDouble("Upgrades.Generator." + tierList + ".Cost"), Integer.parseInt(tierList),
                     configLoad.getString("Upgrades.Generator." + tierList + ".Value")));
             }
 
@@ -95,6 +95,16 @@ public class UpgradeManager {
 
         // Task for applying the speed & jump boost upgrades if the player is on an island that has them
         Bukkit.getScheduler().scheduleSyncRepeatingTask(SkyBlock.getInstance(), this::applyUpgrades, 5L, 20L);
+    }
+
+    public int getGeneratorTier(String name) {
+        List<Upgrade> upgrades = getUpgrades(Type.Generator);
+        for (Upgrade upgrade : upgrades) {
+            if (upgrade.getStrValue().equalsIgnoreCase(name)) {
+                return upgrade.getValue();
+            }
+        }
+        return -1;
     }
 
     public List<Upgrade> getUpgrades(Upgrade.Type type) {
