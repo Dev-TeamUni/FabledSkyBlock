@@ -817,6 +817,16 @@ public class BlockListeners implements Listener {
         GeneratorManager generatorManager = plugin.getGeneratorManager();
         if (generatorManager == null) return false;
 
+        if (config.getBoolean("Island.Generator.UseGeneratorUpgrade", true)) {
+            Generator generator;
+            if (generatorManager.containsGenerator(island.getGenerator())) {
+                generator = generatorManager.getGenerator(island.getGenerator());
+            } else {
+                generator = generatorManager.getGenerator(config.getString("Island.Generator.DefaultGeneratorName", generatorManager.getGenerators().get(0).getName()));
+            }
+            return applyGenerator(block, worldManager, islandLevelManager, island, state, generatorManager, generator);
+        }
+
         List<Generator> generators = Lists.newArrayList(generatorManager.getGenerators());
 
         if (generators.isEmpty()) return false;
