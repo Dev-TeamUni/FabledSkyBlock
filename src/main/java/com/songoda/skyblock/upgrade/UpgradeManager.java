@@ -26,7 +26,7 @@ public class UpgradeManager {
         FileConfiguration configLoad = plugin.getUpgrades();
 
         for (Upgrade.Type typeList : Upgrade.Type.values()) {
-            if (typeList != Upgrade.Type.Size && typeList != Upgrade.Type.Members && typeList != Upgrade.Type.Hoppers) {
+            if (typeList != Upgrade.Type.Size && typeList != Upgrade.Type.Members && typeList != Upgrade.Type.Hoppers && typeList != Upgrade.Type.Generator) {
                 List<Upgrade> upgrades = new ArrayList<>();
 
                 Upgrade upgrade = new Upgrade(configLoad.getDouble("Upgrades." + typeList.name() + ".Cost"));
@@ -82,7 +82,8 @@ public class UpgradeManager {
             upgradeStorage.put(Upgrade.Type.Hoppers, upgrades);
         }
 
-        if (configLoad.getString("Upgrades.Generator") != null) {
+        FileConfiguration config = plugin.getConfiguration();
+        if (configLoad.getString("Upgrades.Generator") != null && config.getBoolean("Island.Generator.UseGeneratorUpgrade", true)) {
             List<Upgrade> upgrades = new LinkedList<>();
 
             for (String tierList : configLoad.getConfigurationSection("Upgrades.Generator").getKeys(false)) {

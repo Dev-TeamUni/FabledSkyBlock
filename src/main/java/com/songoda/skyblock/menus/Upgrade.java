@@ -555,9 +555,9 @@ public class Upgrade {
                     } else if ((is.getType() == Material.DIAMOND_ORE) && (is.hasItemMeta())) {
                         List<com.songoda.skyblock.upgrade.Upgrade> upgrades = upgradeManager
                             .getUpgrades(com.songoda.skyblock.upgrade.Upgrade.Type.Generator);
-                        int nowTier = upgradeManager.getGeneratorTier(island.getGenerator());
 
                         if (upgrades != null && upgrades.size() > 0) {
+                            int nowTier = upgradeManager.getGeneratorTier(island.getGenerator());
                             for (int i = 0; i < upgrades.size(); i++) {
                                 com.songoda.skyblock.upgrade.Upgrade upgrade = upgrades.get(i);
                                 int tier = i + 1;
@@ -1115,9 +1115,9 @@ public class Upgrade {
 
             if(player.hasPermission("fabledskyblock.upgrade." + com.songoda.skyblock.upgrade.Upgrade.Type.Generator.name().toLowerCase())) {
                 upgrades = upgradeManager.getUpgrades(com.songoda.skyblock.upgrade.Upgrade.Type.Generator);
-                double nowTier = upgradeManager.getGeneratorTier(island.getGenerator());
 
                 if (upgrades != null && upgrades.size() > 0) {
+                    int nowTier = upgradeManager.getGeneratorTier(island.getGenerator());
                     for (int i = 0; i < upgrades.size(); i++) {
                         com.songoda.skyblock.upgrade.Upgrade upgrade = upgrades.get(i);
                         int tier = i + 1;
