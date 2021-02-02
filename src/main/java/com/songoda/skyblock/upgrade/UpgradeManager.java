@@ -4,6 +4,7 @@ import com.songoda.skyblock.SkyBlock;
 import com.songoda.skyblock.config.FileManager.Config;
 import com.songoda.skyblock.island.Island;
 import com.songoda.skyblock.island.IslandManager;
+import com.songoda.skyblock.upgrade.Upgrade.Type;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -25,7 +26,7 @@ public class UpgradeManager {
         FileConfiguration configLoad = plugin.getUpgrades();
 
         for (Upgrade.Type typeList : Upgrade.Type.values()) {
-            if (typeList != Upgrade.Type.Size && typeList != Upgrade.Type.Members && typeList != Upgrade.Type.Hoppers) {
+            if (typeList != Upgrade.Type.Size && typeList != Upgrade.Type.Members && typeList != Upgrade.Type.Hoppers && typeList != Upgrade.Type.Generator) {
                 List<Upgrade> upgrades = new ArrayList<>();
 
                 Upgrade upgrade = new Upgrade(configLoad.getDouble("Upgrades." + typeList.name() + ".Cost"));
@@ -74,12 +75,6 @@ public class UpgradeManager {
             List<Upgrade> upgrades = new LinkedList<>();
 
             for (String tierList : configLoad.getConfigurationSection("Upgrades.Hoppers").getKeys(false)) {
-                if (configLoad.getString("Upgrades.Hoppers." + tierList + ".Hoppers") != null) {
-                    if (configLoad.getInt("Upgrades.Hoppers." + tierList + ".Hoppers") > 1000) {
-                        continue;
-                    }
-                }
-
                 upgrades.add(new Upgrade(configLoad.getDouble("Upgrades.Hoppers." + tierList + ".Cost"),
                     configLoad.getInt("Upgrades.Hoppers." + tierList + ".Value")));
             }
@@ -87,8 +82,30 @@ public class UpgradeManager {
             upgradeStorage.put(Upgrade.Type.Hoppers, upgrades);
         }
 
+        FileConfiguration config = plugin.getConfiguration();
+        if (configLoad.getString("Upgrades.Generator") != null && config.getBoolean("Island.Generator.UseGeneratorUpgrade", true)) {
+            List<Upgrade> upgrades = new LinkedList<>();
+
+            for (String tierList : configLoad.getConfigurationSection("Upgrades.Generator").getKeys(false)) {
+                upgrades.add(new Upgrade(configLoad.getDouble("Upgrades.Generator." + tierList + ".Cost"), Integer.parseInt(tierList),
+                    configLoad.getString("Upgrades.Generator." + tierList + ".Value")));
+            }
+
+            upgradeStorage.put(Upgrade.Type.Generator, upgrades);
+        }
+
         // Task for applying the speed & jump boost upgrades if the player is on an island that has them
         Bukkit.getScheduler().scheduleSyncRepeatingTask(SkyBlock.getInstance(), this::applyUpgrades, 5L, 20L);
+    }
+
+    public int getGeneratorTier(String name) {
+        List<Upgrade> upgrades = getUpgrades(Type.Generator);
+        for (Upgrade upgrade : upgrades) {
+            if (upgrade.getStrValue().equalsIgnoreCase(name)) {
+                return upgrade.getValue();
+            }
+        }
+        return -1;
     }
 
     public List<Upgrade> getUpgrades(Upgrade.Type type) {

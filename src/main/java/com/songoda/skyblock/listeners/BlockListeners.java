@@ -59,6 +59,9 @@ public class BlockListeners implements Listener {
     private final SkyBlock plugin;
     private final Set<Location> generatorWaitingLocs;
 
+    private final static BlockFace[] BLOCK_ALL_FACES =
+        new BlockFace[] { BlockFace.SELF, BlockFace.UP, BlockFace.DOWN, BlockFace.NORTH, BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST };
+
     public BlockListeners(SkyBlock plugin) {
         this.plugin = plugin;
         this.generatorWaitingLocs = new HashSet<>();
@@ -457,6 +460,13 @@ public class BlockListeners implements Listener {
             Bukkit.getScheduler().runTaskLater(plugin, () -> {
                 handleGeneration(block, island, event.getToBlock().getState());
             }, 1L);
+        else {
+            CompatibleMaterial material = CompatibleMaterial.getMaterial(block);
+            if (material.isAir() && isNearbyFence(block)) {
+                event.setCancelled(true);
+                handleGeneration(block, island, event.getBlock().getState());
+            }
+        }
     }
 
     @EventHandler
@@ -789,17 +799,33 @@ public class BlockListeners implements Listener {
 
         CompatibleMaterial material = CompatibleMaterial.getMaterial(block);
 
-        if (ServerVersion.isServerVersionAtLeast(ServerVersion.V1_12)
+        if (config.getBoolean("Island.Generator.UseFence", true)) {
+            if (!material.isAir() || !isNearbyFence(block)) {
+                return false;
+            }
+        } else {
+            if (ServerVersion.isServerVersionAtLeast(ServerVersion.V1_12)
                 && material != CompatibleMaterial.WATER
                 && material != CompatibleMaterial.LAVA)
-            return false;
+                return false;
 
-        Material type = state.getType();
+            Material type = state.getType();
 
-        if (type != Material.COBBLESTONE && type != Material.STONE) return false;
+            if (type != Material.COBBLESTONE && type != Material.STONE) return false;
+        }
 
         GeneratorManager generatorManager = plugin.getGeneratorManager();
         if (generatorManager == null) return false;
+
+        if (config.getBoolean("Island.Generator.UseGeneratorUpgrade", true)) {
+            Generator generator;
+            if (generatorManager.containsGenerator(island.getGenerator())) {
+                generator = generatorManager.getGenerator(island.getGenerator());
+            } else {
+                generator = generatorManager.getGenerator(config.getString("Island.Generator.DefaultGeneratorName", generatorManager.getGenerators().get(0).getName()));
+            }
+            return applyGenerator(block, worldManager, islandLevelManager, island, state, generatorManager, generator);
+        }
 
         List<Generator> generators = Lists.newArrayList(generatorManager.getGenerators());
 
@@ -890,6 +916,16 @@ public class BlockListeners implements Listener {
                     if (applyGenerator(block, worldManager, islandLevelManager, island, state, generatorManager, generator))
                         return false;
                 }
+            }
+        }
+        return false;
+    }
+
+    private boolean isNearbyFence(Block b) {
+        for (final BlockFace face : BLOCK_ALL_FACES) {
+            CompatibleMaterial check = CompatibleMaterial.getMaterial(b.getRelative(face));
+            if (check == CompatibleMaterial.OAK_FENCE) {
+                return true;
             }
         }
         return false;
