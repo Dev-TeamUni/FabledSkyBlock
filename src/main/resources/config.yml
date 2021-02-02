@@ -362,6 +362,15 @@ Island:
         Async: true
     Generator:
         Enable: true
+        # Use fence generator
+        UseFence: true
+        # Use generator upgrade or not.
+        # If true, ignored unlock level
+        # Otherwise, ignored generator upgrade
+        UseGeneratorUpgrade: true
+        # Default generator if UseGeneratorUpgrade is true
+        # If UseGeneratorUpgrade is false, ignore this setting.
+        DefaultGeneratorName: Normal
         # Check only the island owner's permissions
         # it requires Vault installed
         # Experimental feature!

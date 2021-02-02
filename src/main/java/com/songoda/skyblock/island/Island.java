@@ -53,6 +53,7 @@ public class Island {
     private int size;
     private int maxMembers;
     private int maxHoppers;
+    private String generator;
     private boolean deleted = false;
 
     public Island(@Nonnull OfflinePlayer player) {
@@ -65,6 +66,7 @@ public class Island {
         this.size = this.plugin.getConfiguration().getInt("Island.Size.Minimum");
         this.maxMembers =  this.plugin.getConfiguration().getInt("Island.Member.Capacity", 3);
         this.maxHoppers = this.plugin.getConfiguration().getInt("Island.Hopper.Capacity", 10);
+        this.generator = this.plugin.getConfiguration().getString("Island.Generator.DefaultGeneratorName");
 
         if (this.size > 1000) {
             this.size = 50;
@@ -129,6 +131,12 @@ public class Island {
                 size = configLoad.getInt("Size");
             } else {
                 configLoad.set("Size", size);
+            }
+
+            if (configLoad.getString("Generator") != null) {
+                generator = configLoad.getString("Generator");
+            } else {
+                configLoad.set("Generator", generator);
             }
 
             if (configLoad.getString("Settings") != null) {
@@ -247,6 +255,7 @@ public class Island {
             configLoad.set("Ownership.Original", ownerUUID.toString());
             configLoad.set("Size", size);
             configLoad.set("MaxHoppers", maxHoppers);
+            configLoad.set("Generator", generator);
 
             for (IslandRole roleList : IslandRole.getRoles()) {
                 List<BasicPermission> allPermissions = plugin.getPermissionManager().getPermissions();
@@ -367,6 +376,19 @@ public class Island {
         plugin.getFileManager().getConfig(
                 new File(new File(plugin.getDataFolder().toString() + "/island-data"), ownerUUID.toString() + ".yml"))
                 .getFileConfiguration().set("Size", size);
+    }
+
+    public String getGenerator() {
+        return generator;
+    }
+
+    public void setGenerator(String name) {
+        if (this.plugin.getGeneratorManager().containsGenerator(name)) {
+            generator = name;
+            plugin.getFileManager().getConfig(
+                new File(new File(plugin.getDataFolder().toString() + "/island-data"), ownerUUID.toString() + ".yml"))
+                .getFileConfiguration().set("Generator", generator);
+        }
     }
 
     public double getRadius() {
