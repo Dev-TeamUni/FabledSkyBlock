@@ -1,5 +1,6 @@
 package com.songoda.skyblock.listeners;
 
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import com.songoda.core.compatibility.CompatibleMaterial;
 import com.songoda.core.compatibility.CompatibleSound;
@@ -921,10 +922,15 @@ public class BlockListeners implements Listener {
         return false;
     }
 
+    private final static Set<CompatibleMaterial> fences = ImmutableSet.of(
+        CompatibleMaterial.OAK_FENCE, CompatibleMaterial.SPRUCE_FENCE, CompatibleMaterial.BIRCH_FENCE,
+        CompatibleMaterial.JUNGLE_FENCE, CompatibleMaterial.ACACIA_FENCE, CompatibleMaterial.DARK_OAK_FENCE
+    );
+
     private boolean isNearbyFence(Block b) {
         for (final BlockFace face : BLOCK_ALL_FACES) {
             CompatibleMaterial check = CompatibleMaterial.getMaterial(b.getRelative(face));
-            if (check == CompatibleMaterial.OAK_FENCE) {
+            if (fences.contains(check)) {
                 return true;
             }
         }
