@@ -7,6 +7,8 @@ ClassLocalization:
    Operator: 'Operator'
    Owner: 'Owner'
 Command:
+  Aliases:
+    - 'is'
   Scoreboard:
     Disabled:
       Message: '&bSkyBlock &8| &aInfo&8: &eScoreboard disabled.'
