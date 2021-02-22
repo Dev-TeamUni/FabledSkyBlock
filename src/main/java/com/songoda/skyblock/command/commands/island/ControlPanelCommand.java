@@ -46,11 +46,6 @@ public class ControlPanelCommand extends SubCommand {
     }
 
     @Override
-    public String[] getAliases() {
-        return new String[]{"cp"};
-    }
-
-    @Override
     public String[] getArguments() {
         return new String[0];
     }

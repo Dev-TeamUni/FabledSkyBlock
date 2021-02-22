@@ -99,11 +99,6 @@ public class ChatCommand extends SubCommand {
     }
 
     @Override
-    public String[] getAliases() {
-        return new String[0];
-    }
-
-    @Override
     public String[] getArguments() {
         return new String[0];
     }

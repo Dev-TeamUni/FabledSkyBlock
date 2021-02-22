@@ -108,11 +108,6 @@ public class ChallengeCommand extends SubCommand {
 	}
 
 	@Override
-	public String[] getAliases() {
-		return new String[] { "c", "challenges" };
-	}
-
-	@Override
 	public String[] getArguments() {
 		return new String[0];
 	}

@@ -11,6 +11,5 @@ loadbefore: [Multiverse-Core, ProtocolLib]
 commands:
   island:
     description: Island command
-    aliases: [ is ]
   skyblock:
     description: Skyblock info command.

@@ -100,11 +100,6 @@ public class InformationCommand extends SubCommand {
     }
 
     @Override
-    public String[] getAliases() {
-        return new String[]{"info"};
-    }
-
-    @Override
     public String[] getArguments() {
         return new String[0];
     }

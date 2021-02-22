@@ -114,11 +114,6 @@ public class CurrentCommand extends SubCommand {
     }
 
     @Override
-    public String[] getAliases() {
-        return new String[]{"cur"};
-    }
-
-    @Override
     public String[] getArguments() {
         return new String[0];
     }

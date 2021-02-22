@@ -56,11 +56,6 @@ public class UpgradeCommand extends SubCommand {
     }
 
     @Override
-    public String[] getAliases() {
-        return new String[]{"upgrades"};
-    }
-
-    @Override
     public String[] getArguments() {
         return new String[0];
     }
