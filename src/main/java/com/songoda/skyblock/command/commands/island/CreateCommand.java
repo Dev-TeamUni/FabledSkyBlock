@@ -128,11 +128,6 @@ public class CreateCommand extends SubCommand {
     }
 
     @Override
-    public String[] getAliases() {
-        return new String[]{"new"};
-    }
-
-    @Override
     public String[] getArguments() {
         return new String[0];
     }

@@ -156,11 +156,6 @@ public class TeleportCommand extends SubCommand {
     }
 
     @Override
-    public String[] getAliases() {
-        return new String[] { "tp", "spawn", "home", "go", "warp" };
-    }
-
-    @Override
     public String[] getArguments() {
         return new String[0];
     }

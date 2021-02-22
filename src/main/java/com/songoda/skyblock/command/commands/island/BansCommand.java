@@ -61,11 +61,6 @@ public class BansCommand extends SubCommand {
     }
 
     @Override
-    public String[] getAliases() {
-        return new String[]{"banned"};
-    }
-
-    @Override
     public String[] getArguments() {
         return new String[0];
     }

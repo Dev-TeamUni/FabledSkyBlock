@@ -68,11 +68,6 @@ public class SettingsCommand extends SubCommand {
     }
 
     @Override
-    public String[] getAliases() {
-        return new String[]{"permissions", "perms", "p"};
-    }
-
-    @Override
     public String[] getArguments() {
         return new String[0];
     }

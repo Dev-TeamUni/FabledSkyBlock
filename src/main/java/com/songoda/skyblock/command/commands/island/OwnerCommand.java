@@ -262,11 +262,6 @@ public class OwnerCommand extends SubCommand {
     }
 
     @Override
-    public String[] getAliases() {
-        return new String[]{"ownership", "transfer", "makeleader", "makeowner"};
-    }
-
-    @Override
     public String[] getArguments() {
         return new String[0];
     }

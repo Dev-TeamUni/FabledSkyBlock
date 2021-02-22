@@ -12,10 +12,12 @@ public abstract class SubCommand {
 
     protected final SkyBlock plugin;
     protected final String info;
+    protected final String[] aliases;
 
     public SubCommand() {
         this.plugin = SkyBlock.getInstance();
         this.info = this.plugin.formatText(this.plugin.getLanguage().getString(this.getInfoMessagePath()));
+        this.aliases = this.plugin.getLanguage().getStringList(this.getAliasesPath()).toArray(new String[0]);
     }
 
     public abstract void onCommandByPlayer(Player player, String[] args);
@@ -26,7 +28,15 @@ public abstract class SubCommand {
 
     public abstract String getInfoMessagePath();
 
-    public abstract String[] getAliases();
+    public final String getAliasesPath() {
+        return "Command.SubCommand."
+            + (this.getClass().getName().contains("admin") ? "Admin." : "")
+            + this.getClass().getSimpleName().replace("Command", "");
+    }
+
+    public String[] getAliases() {
+        return aliases;
+    }
 
     public abstract String[] getArguments();
 

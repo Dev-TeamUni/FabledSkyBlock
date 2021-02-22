@@ -17,6 +17,8 @@ import com.songoda.skyblock.message.MessageManager;
 import com.songoda.skyblock.sound.SoundManager;
 import com.songoda.skyblock.utils.ChatComponent;
 import java.lang.reflect.Field;
+import java.util.HashSet;
+import java.util.Set;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
@@ -43,6 +45,7 @@ public class CommandManager implements CommandExecutor, TabCompleter {
     private final SkyBlock plugin;
     private List<SubCommand> islandCommands;
     private List<SubCommand> adminCommands;
+    private Set<String> helpAliases = new HashSet<>();
 
     public CommandManager(SkyBlock plugin) {
         this.plugin = plugin;
@@ -63,7 +66,8 @@ public class CommandManager implements CommandExecutor, TabCompleter {
             islandCMD.setTabCompleter(this);
             registerSubCommands();
         }
-
+        helpAliases.add("help");
+        helpAliases.addAll(configLoad.getStringList("Command.SubCommand.Help"));
     }
 
     private static CommandMap getCommandMap() {
@@ -210,7 +214,7 @@ public class CommandManager implements CommandExecutor, TabCompleter {
             SubCommand subCommand;
             boolean isAdmin;
 
-            if (args[0].equalsIgnoreCase("help")) {
+            if (helpAliases.contains(args[0].toLowerCase())) {
                 if (player == null) {
                     sendConsoleHelpCommands(sender);
                 } else {
@@ -247,7 +251,7 @@ public class CommandManager implements CommandExecutor, TabCompleter {
 
                 return true;
             } else if (args[0].equalsIgnoreCase("admin")) {
-                if (args.length == 1 || args[1].equalsIgnoreCase("help")) {
+                if (args.length == 1 || helpAliases.contains(args[0].toLowerCase())) {
                     if (player == null) {
                         sendConsoleHelpCommands(sender);
                     } else {
