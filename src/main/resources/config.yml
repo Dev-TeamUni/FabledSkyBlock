@@ -321,32 +321,10 @@ Island:
         Spawn: false
         # When enabled, players will be teleported to their island spawn point when they join the server.
         Island: false
-    Damage:
-        # When the setting 'Damage' has been disabled, if this option is enabled, players will take
-        # damage at an island. This discludes entity and void damage.
-        Enable: false
-    PvP:
-        # When the setting 'PvP' has been disabled, if this option is enabled, players will be
-        # able to damage other players at an island.
-        Enable: false
-    KeepItemsOnDeath:
-        # When the setting 'KeepItemsOnDeath' has been disabled, if this option is enabled, players will keep
-        # items in their inventory if they die at an island.
-        Enable: true
     Settings:
         # With this option true the players will need fabledskyblock.settings.<role>.<settingName> permission
         # Roles and settings name can be found in the settings.yml file
         Permission: false
-        # When any of these options are disabled, the setting will be removed from the settings menu
-        # menu.
-        KeepItemsOnDeath:
-            Enable: true
-        PvP:
-            Enable: true
-        Damage:
-            Enable: true
-        Hunger:
-            Enable: false
         # If owners and operators should have same permission of members
         # It should be left to false as it could be changed soon
         OwnersAndOperatorsAsMembers: false

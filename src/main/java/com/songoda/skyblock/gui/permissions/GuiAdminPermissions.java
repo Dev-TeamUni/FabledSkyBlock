@@ -63,7 +63,8 @@ public class GuiAdminPermissions extends Gui {
         });
 
         List<BasicPermission> permissions = permissionManager.getPermissions().stream()
-                .filter(p -> p.getType() == getType(role))
+                .filter(p -> p.getType() == getType(role) &&
+                    SkyBlock.getInstance().getSettings().getBoolean("Settings." + role.name() + "." + p.getName() + ".Enabled", true))
                 .collect(Collectors.toList());
         double itemCount = permissions.size();
         this.pages = (int) Math.max(1, Math.ceil(itemCount / 36));
