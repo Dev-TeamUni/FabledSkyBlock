@@ -131,8 +131,9 @@ public class GuiPermissions extends Gui {
         });
 
         List<BasicPermission> permissions = permissionManager.getPermissions().stream()
-                .filter(p -> p.getType() == getType(role))
-                .collect(Collectors.toList());
+            .filter(p -> p.getType() == getType(role) &&
+                SkyBlock.getInstance().getSettings().getBoolean("Settings." + role.name() + "." + p.getName() + ".Enabled", true))
+            .collect(Collectors.toList());
         
         if(configLoad.getBoolean("Island.Settings.Permission")) {
             permissions.removeIf(permission -> !player.hasPermission("fabledskyblock.settings." +
