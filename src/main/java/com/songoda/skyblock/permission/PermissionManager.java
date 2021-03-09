@@ -85,6 +85,9 @@ public class PermissionManager {
                 new FishingPermission(plugin),
                 new CauldronPermission(plugin),
                 new ProtectorDamagePermission(plugin),
+                new PvpPermission(plugin),
+                new DamagePermission(plugin),
+                new HungerPermission(plugin),
 
                 // Basic
                 new MemberPermission(),
@@ -100,23 +103,8 @@ public class PermissionManager {
                 new LeafDecayPermission(),
                 new WeatherPermission(),
                 new MainSpawnPermission(),
-                new VisitorSpawnPermission());
-
-        if (plugin.getConfiguration().getBoolean("Island.Settings.KeepItemsOnDeath.Enable")) {
-            registerPermission(new KeepItemsOnDeathPermission());
-        }
-
-        if (plugin.getConfiguration().getBoolean("Island.Settings.PvP.Enable")) {
-            registerPermission(new PvpPermission(plugin));
-        }
-
-        if (plugin.getConfiguration().getBoolean("Island.Settings.Damage.Enable")) {
-            registerPermission(new DamagePermission(plugin));
-        }
-
-        if (plugin.getConfiguration().getBoolean("Island.Settings.Hunger.Enable")) {
-            registerPermission(new HungerPermission(plugin));
-        }
+                new VisitorSpawnPermission(),
+                new KeepItemsOnDeathPermission());
 
         registeredHandlers = registeredHandlers.stream()
                 .sorted(Comparator.comparingInt(h -> h.getHandler().getAnnotation(PermissionHandler.class).priority().ordinal()))
@@ -129,24 +117,29 @@ public class PermissionManager {
 
         switch (permission.getType()) {
             case GENERIC:
-                if (settingsConfigLoad.getString("Settings.Visitor." + permission.getName()) == null) {
-                    settingsConfigLoad.set("Settings.Visitor." + permission.getName(), true);
+                if (settingsConfigLoad.getString("Settings.Visitor." + permission.getName() + ".Enabled") == null) {
+                    settingsConfigLoad.set("Settings.Visitor." + permission.getName() + ".Enabled", true);
+                    settingsConfigLoad.set("Settings.Visitor." + permission.getName() + ".Default", true);
                 }
-                if (settingsConfigLoad.getString("Settings.Member." + permission.getName()) == null) {
-                    settingsConfigLoad.set("Settings.Member." + permission.getName(), true);
+                if (settingsConfigLoad.getString("Settings.Member." + permission.getName() + ".Enabled") == null) {
+                    settingsConfigLoad.set("Settings.Member." + permission.getName() + ".Enabled", true);
+                    settingsConfigLoad.set("Settings.Member." + permission.getName() + ".Default", true);
                 }
-                if (settingsConfigLoad.getString("Settings.Coop." + permission.getName()) == null) {
-                    settingsConfigLoad.set("Settings.Coop." + permission.getName(), true);
+                if (settingsConfigLoad.getString("Settings.Coop." + permission.getName() + ".Enabled") == null) {
+                    settingsConfigLoad.set("Settings.Coop." + permission.getName() + ".Enabled", true);
+                    settingsConfigLoad.set("Settings.Coop." + permission.getName() + ".Default", true);
                 }
                 break;
             case OPERATOR:
-                if (settingsConfigLoad.getString("Settings.Operator." + permission.getName()) == null) {
-                    settingsConfigLoad.set("Settings.Operator." + permission.getName(), true);
+                if (settingsConfigLoad.getString("Settings.Operator." + permission.getName() + ".Enabled") == null) {
+                    settingsConfigLoad.set("Settings.Operator." + permission.getName() + ".Enabled", true);
+                    settingsConfigLoad.set("Settings.Operator." + permission.getName() + ".Default", true);
                 }
                 break;
             case ISLAND:
-                if (settingsConfigLoad.getString("Settings.Owner." + permission.getName()) == null) {
-                    settingsConfigLoad.set("Settings.Owner." + permission.getName(), true);
+                if (settingsConfigLoad.getString("Settings.Owner." + permission.getName() + ".Enabled") == null) {
+                    settingsConfigLoad.set("Settings.Owner." + permission.getName() + ".Enabled", true);
+                    settingsConfigLoad.set("Settings.Owner." + permission.getName() + ".Default", true);
                 }
                 break;
         }

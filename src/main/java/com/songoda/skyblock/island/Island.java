@@ -188,6 +188,7 @@ public class Island {
                 configLoad.set("Operators", operators);
             }
 
+            FileConfiguration settingsConfig = this.plugin.getSettings();
             Config settingsDataConfig = null;
 
             File settingDataFile = new File(plugin.getDataFolder().toString() + "/setting-data", getOwnerUUID().toString() + ".yml");
@@ -201,15 +202,16 @@ public class Island {
                 List<IslandPermission> permissions = new ArrayList<>(allPermissions.size());
 
                 for (BasicPermission permission : allPermissions) {
-                    if (settingsDataConfig == null || settingsDataConfig.getFileConfiguration()
-                            .getString("Settings." + roleList.name() + "." + permission.getName()) == null) {
-                        permissions.add(
-                                new IslandPermission(permission, this.plugin.getSettings()
-                                        .getBoolean("Settings." + roleList.name() + "." + permission.getName(), true)));
+                    boolean value;
+                    if (!settingsConfig.getBoolean("Settings." + roleList.name() + "." + permission.getName() + ".Enabled", true) || settingsDataConfig == null ||
+                        settingsDataConfig.getFileConfiguration().getString("Settings." + roleList.name() + "." + permission.getName()) == null) {
+                        value = settingsConfig
+                            .getBoolean("Settings." + roleList.name() + "." + permission.getName() + ".Default", true);
                     } else {
-                        permissions.add(new IslandPermission(permission, settingsDataConfig.getFileConfiguration()
-                                .getBoolean("Settings." + roleList.name() + "." + permission.getName(), true)));
+                        value = settingsDataConfig.getFileConfiguration()
+                            .getBoolean("Settings." + roleList.name() + "." + permission.getName(), true);
                     }
+                    permissions.add(new IslandPermission(permission, value));
                 }
 
                 islandPermissions.put(roleList, permissions);
@@ -264,7 +266,7 @@ public class Island {
                 for (BasicPermission permission : allPermissions) {
                     permissions.add(
                             new IslandPermission(permission, this.plugin.getSettings()
-                                    .getBoolean("Settings." + roleList.name() + "." + permission.getName(), true)));
+                                    .getBoolean("Settings." + roleList.name() + "." + permission.getName() + ".Default", true)));
                 }
 
                 islandPermissions.put(roleList, permissions);

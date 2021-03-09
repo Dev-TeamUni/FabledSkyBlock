@@ -55,11 +55,6 @@ public class VisitCommand extends SubCommand {
     }
 
     @Override
-    public String[] getAliases() {
-        return new String[]{"warps", "explore"};
-    }
-
-    @Override
     public String[] getArguments() {
         return new String[0];
     }

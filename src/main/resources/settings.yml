@@ -1,174 +1,510 @@
 Settings:
     Visitor:
-        Destroy: false
-        Place: false
-        Anvil: false
-        ArmorStandUse: false
-        Beacon: false
-        Bed: false
-        AnimalBreeding: false
-        Brewing: false
-        Bucket: false
-        WaterCollection: false
-        Storage: false
-        Workbench: false
-        Trample: false
-        Door: false
-        Gate: false
-        Projectile: false
-        Enchant: false
-        Fire: false
-        Furnace: false
-        HorseInventory: false
-        MobRiding: false
-        MonsterHurting: false
-        MobHurting: false
-        MobTaming: true
-        Leash: false
-        LeverButton: false
-        Milking: false
-        Jukebox: false
-        Cauldron: false
-        PressurePlate: false
-        Redstone: false
-        Shearing: false
-        Trading: false
-        ItemDrop: false
-        ItemPickup: false
-        Fishing: false
-        DropperDispenser: false
-        SpawnEgg: false
-        HangingDestroy: false
-        Cake: false
-        DragonEggUse: false
-        Minecart: false
-        Boat: false
-        Portal: false
-        Hopper: false
-        EntityPlacement: false
-        ExperienceOrbPickup: false
-        Trapdoor: false
-        Noteblock: false
-        Damage: true
+        Destroy:
+            Enabled: true
+            Default: false
+        Place:
+            Enabled: true
+            Default: false
+        Anvil:
+            Enabled: true
+            Default: false
+        ArmorStandUse:
+            Enabled: true
+            Default: false
+        Beacon:
+            Enabled: true
+            Default: false
+        Bed:
+            Enabled: true
+            Default: false
+        AnimalBreeding:
+            Enabled: true
+            Default: false
+        Brewing:
+            Enabled: true
+            Default: false
+        Bucket:
+            Enabled: true
+            Default: false
+        WaterCollection:
+            Enabled: true
+            Default: false
+        Storage:
+            Enabled: true
+            Default: false
+        Workbench:
+            Enabled: true
+            Default: false
+        Trample:
+            Enabled: true
+            Default: false
+        Door:
+            Enabled: true
+            Default: false
+        Gate:
+            Enabled: true
+            Default: false
+        Projectile:
+            Enabled: true
+            Default: false
+        Enchant:
+            Enabled: true
+            Default: false
+        Fire:
+            Enabled: true
+            Default: false
+        Furnace:
+            Enabled: true
+            Default: false
+        HorseInventory:
+            Enabled: true
+            Default: false
+        MobRiding:
+            Enabled: true
+            Default: false
+        MonsterHurting:
+            Enabled: true
+            Default: false
+        MobHurting:
+            Enabled: true
+            Default: false
+        MobTaming:
+            Enabled: true
+            Default: true
+        Leash:
+            Enabled: true
+            Default: false
+        LeverButton:
+            Enabled: true
+            Default: false
+        Milking:
+            Enabled: true
+            Default: false
+        Jukebox:
+            Enabled: true
+            Default: false
+        Cauldron:
+            Enabled: true
+            Default: false
+        PressurePlate:
+            Enabled: true
+            Default: false
+        Redstone:
+            Enabled: true
+            Default: false
+        Shearing:
+            Enabled: true
+            Default: false
+        Trading:
+            Enabled: true
+            Default: false
+        ItemDrop:
+            Enabled: true
+            Default: false
+        ItemPickup:
+            Enabled: true
+            Default: false
+        Fishing:
+            Enabled: true
+            Default: false
+        DropperDispenser:
+            Enabled: true
+            Default: false
+        SpawnEgg:
+            Enabled: true
+            Default: false
+        HangingDestroy:
+            Enabled: true
+            Default: false
+        Cake:
+            Enabled: true
+            Default: false
+        DragonEggUse:
+            Enabled: true
+            Default: false
+        Minecart:
+            Enabled: true
+            Default: false
+        Boat:
+            Enabled: true
+            Default: false
+        Portal:
+            Enabled: true
+            Default: false
+        Hopper:
+            Enabled: true
+            Default: false
+        EntityPlacement:
+            Enabled: true
+            Default: false
+        ExperienceOrbPickup:
+            Enabled: true
+            Default: false
+        Trapdoor:
+            Enabled: true
+            Default: false
+        Noteblock:
+            Enabled: true
+            Default: false
+        Damage:
+            Enabled: true
+            Default: true
     Member:
-        Destroy: true
-        Place: true
-        Anvil: true
-        ArmorStandUse: true
-        Beacon: true
-        Bed: true
-        AnimalBreeding: true
-        Brewing: true
-        Bucket: true
-        Cauldron: true
-        WaterCollection: true
-        Storage: true
-        Workbench: true
-        Trample: true
-        Door: true
-        Gate: true
-        Projectile: true
-        Enchant: true
-        Fire: true
-        Furnace: true
-        HorseInventory: true
-        MobRiding: true
-        MonsterHurting: true
-        MobHurting: true
-        MobTaming: true
-        Leash: true
-        LeverButton: true
-        Milking: true
-        Jukebox: true
-        PressurePlate: true
-        Redstone: true
-        Shearing: true
-        Trading: true
-        ItemDrop: true
-        ItemPickup: true
-        Fishing: true
-        DropperDispenser: true
-        SpawnEgg: true
-        Minecart: true
-        Boat: true
-        HangingDestroy: true
-        Cake: true
-        DragonEggUse: true
-        Portal: true
-        Hopper: true
-        EntityPlacement: true
-        ExperienceOrbPickup: true
-        Trapdoor: true
-        Noteblock: true
-        Damage: true
+        Destroy:
+            Enabled: true
+            Default: true
+        Place:
+            Enabled: true
+            Default: true
+        Anvil:
+            Enabled: true
+            Default: true
+        ArmorStandUse:
+            Enabled: true
+            Default: true
+        Beacon:
+            Enabled: true
+            Default: true
+        Bed:
+            Enabled: true
+            Default: true
+        AnimalBreeding:
+            Enabled: true
+            Default: true
+        Brewing:
+            Enabled: true
+            Default: true
+        Bucket:
+            Enabled: true
+            Default: true
+        Cauldron:
+            Enabled: true
+            Default: true
+        WaterCollection:
+            Enabled: true
+            Default: true
+        Storage:
+            Enabled: true
+            Default: true
+        Workbench:
+            Enabled: true
+            Default: true
+        Trample:
+            Enabled: true
+            Default: true
+        Door:
+            Enabled: true
+            Default: true
+        Gate:
+            Enabled: true
+            Default: true
+        Projectile:
+            Enabled: true
+            Default: true
+        Enchant:
+            Enabled: true
+            Default: true
+        Fire:
+            Enabled: true
+            Default: true
+        Furnace:
+            Enabled: true
+            Default: true
+        HorseInventory:
+            Enabled: true
+            Default: true
+        MobRiding:
+            Enabled: true
+            Default: true
+        MonsterHurting:
+            Enabled: true
+            Default: true
+        MobHurting:
+            Enabled: true
+            Default: true
+        MobTaming:
+            Enabled: true
+            Default: true
+        Leash:
+            Enabled: true
+            Default: true
+        LeverButton:
+            Enabled: true
+            Default: true
+        Milking:
+            Enabled: true
+            Default: true
+        Jukebox:
+            Enabled: true
+            Default: true
+        PressurePlate:
+            Enabled: true
+            Default: true
+        Redstone:
+            Enabled: true
+            Default: true
+        Shearing:
+            Enabled: true
+            Default: true
+        Trading:
+            Enabled: true
+            Default: true
+        ItemDrop:
+            Enabled: true
+            Default: true
+        ItemPickup:
+            Enabled: true
+            Default: true
+        Fishing:
+            Enabled: true
+            Default: true
+        DropperDispenser:
+            Enabled: true
+            Default: true
+        SpawnEgg:
+            Enabled: true
+            Default: true
+        Minecart:
+            Enabled: true
+            Default: true
+        Boat:
+            Enabled: true
+            Default: true
+        HangingDestroy:
+            Enabled: true
+            Default: true
+        Cake:
+            Enabled: true
+            Default: true
+        DragonEggUse:
+            Enabled: true
+            Default: true
+        Portal:
+            Enabled: true
+            Default: true
+        Hopper:
+            Enabled: true
+            Default: true
+        EntityPlacement:
+            Enabled: true
+            Default: true
+        ExperienceOrbPickup:
+            Enabled: true
+            Default: true
+        Trapdoor:
+            Enabled: true
+            Default: true
+        Noteblock:
+            Enabled: true
+            Default: true
+        Damage:
+            Enabled: true
+            Default: true
     Operator:
-        Invite: true
-        Kick: true
-        Ban: true
-        Unban: true
-        Visitor: true
-        Member: true
-        Island: false
-        Coop: true
-        CoopPlayers: true
-        MainSpawn: false
-        VisitorSpawn: true
-        Border: true
-        Biome: true
-        Weather: true
+        Invite:
+            Enabled: true
+            Default: true
+        Kick:
+            Enabled: true
+            Default: true
+        Ban:
+            Enabled: true
+            Default: true
+        Unban:
+            Enabled: true
+            Default: true
+        Visitor:
+            Enabled: true
+            Default: true
+        Member:
+            Enabled: true
+            Default: true
+        Island:
+            Enabled: true
+            Default: false
+        Coop:
+            Enabled: true
+            Default: true
+        CoopPlayers:
+            Enabled: true
+            Default: true
+        MainSpawn:
+            Enabled: true
+            Default: false
+        VisitorSpawn:
+            Enabled: true
+            Default: true
+        Border:
+            Enabled: true
+            Default: true
+        Biome:
+            Enabled: true
+            Default: true
+        Weather:
+            Enabled: true
+            Default: true
     Coop:
-        Destroy: true
-        Place: true
-        Anvil: true
-        ArmorStandUse: true
-        Beacon: true
-        Bed: true
-        AnimalBreeding: true
-        Brewing: true
-        Bucket: true
-        WaterCollection: true
-        Storage: true
-        Workbench: true
-        Crop: true
-        Door: true
-        Gate: true
-        Cauldron: true
-        Projectile: true
-        Enchant: true
-        Fire: true
-        Furnace: true
-        HorseInventory: true
-        MobRiding: true
-        MonsterHurting: true
-        MobHurting: true
-        MobTaming: true
-        Leash: true
-        LeverButton: true
-        Milking: true
-        Jukebox: true
-        PressurePlate: true
-        Redstone: true
-        Shearing: true
-        Trading: true
-        ItemDrop: true
-        ItemPickup: true
-        Fishing: true
-        DropperDispenser: true
-        SpawnEgg: true
-        MinecartBoat: true
-        HangingDestroy: true
-        Cake: true
-        DragonEggUse: true
-        Portal: true
-        Hopper: true
-        EntityPlacement: true
-        ExperienceOrbPickup: true
-        Damage: true
+        Destroy:
+            Enabled: true
+            Default: true
+        Place:
+            Enabled: true
+            Default: true
+        Anvil:
+            Enabled: true
+            Default: true
+        ArmorStandUse:
+            Enabled: true
+            Default: true
+        Beacon:
+            Enabled: true
+            Default: true
+        Bed:
+            Enabled: true
+            Default: true
+        AnimalBreeding:
+            Enabled: true
+            Default: true
+        Brewing:
+            Enabled: true
+            Default: true
+        Bucket:
+            Enabled: true
+            Default: true
+        WaterCollection:
+            Enabled: true
+            Default: true
+        Storage:
+            Enabled: true
+            Default: true
+        Workbench:
+            Enabled: true
+            Default: true
+        Crop:
+            Enabled: true
+            Default: true
+        Door:
+            Enabled: true
+            Default: true
+        Gate:
+            Enabled: true
+            Default: true
+        Cauldron:
+            Enabled: true
+            Default: true
+        Projectile:
+            Enabled: true
+            Default: true
+        Enchant:
+            Enabled: true
+            Default: true
+        Fire:
+            Enabled: true
+            Default: true
+        Furnace:
+            Enabled: true
+            Default: true
+        HorseInventory:
+            Enabled: true
+            Default: true
+        MobRiding:
+            Enabled: true
+            Default: true
+        MonsterHurting:
+            Enabled: true
+            Default: true
+        MobHurting:
+            Enabled: true
+            Default: true
+        MobTaming:
+            Enabled: true
+            Default: true
+        Leash:
+            Enabled: true
+            Default: true
+        LeverButton:
+            Enabled: true
+            Default: true
+        Milking:
+            Enabled: true
+            Default: true
+        Jukebox:
+            Enabled: true
+            Default: true
+        PressurePlate:
+            Enabled: true
+            Default: true
+        Redstone:
+            Enabled: true
+            Default: true
+        Shearing:
+            Enabled: true
+            Default: true
+        Trading:
+            Enabled: true
+            Default: true
+        ItemDrop:
+            Enabled: true
+            Default: true
+        ItemPickup:
+            Enabled: true
+            Default: true
+        Fishing:
+            Enabled: true
+            Default: true
+        DropperDispenser:
+            Enabled: true
+            Default: true
+        SpawnEgg:
+            Enabled: true
+            Default: true
+        MinecartBoat:
+            Enabled: true
+            Default: true
+        HangingDestroy:
+            Enabled: true
+            Default: true
+        Cake:
+            Enabled: true
+            Default: true
+        DragonEggUse:
+            Enabled: true
+            Default: true
+        Portal:
+            Enabled: true
+            Default: true
+        Hopper:
+            Enabled: true
+            Default: true
+        EntityPlacement:
+            Enabled: true
+            Default: true
+        ExperienceOrbPickup:
+            Enabled: true
+            Default: true
+        Damage:
+            Enabled: true
+            Default: true
     Owner:
-        NaturalMobSpawning: true
-        MobGriefing: true
-        Explosions: true
-        ProtectorDamage: true
-        FireSpread: true
-        LeafDecay: true
-        KeepItemsOnDeath: false
+        NaturalMobSpawning:
+            Enabled: true
+            Default: true
+        MobGriefing:
+            Enabled: true
+            Default: true
+        Explosions:
+            Enabled: true
+            Default: true
+        ProtectorDamage:
+            Enabled: true
+            Default: true
+        FireSpread:
+            Enabled: true
+            Default: true
+        LeafDecay:
+            Enabled: true
+            Default: true
+        KeepItemsOnDeath:
+            Enabled: true
+            Default: false

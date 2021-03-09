@@ -164,11 +164,6 @@ public class LevelCommand extends SubCommand {
     }
 
     @Override
-    public String[] getAliases() {
-        return new String[]{"levelling", "points"};
-    }
-
-    @Override
     public String[] getArguments() {
         return new String[0];
     }

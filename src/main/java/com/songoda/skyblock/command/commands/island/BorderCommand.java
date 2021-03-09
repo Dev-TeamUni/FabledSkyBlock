@@ -68,11 +68,6 @@ public class BorderCommand extends SubCommand {
     }
 
     @Override
-    public String[] getAliases() {
-        return new String[]{"worldborder", "wb"};
-    }
-
-    @Override
     public String[] getArguments() {
         return new String[0];
     }

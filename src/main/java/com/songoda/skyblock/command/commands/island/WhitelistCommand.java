@@ -115,11 +115,6 @@ public class WhitelistCommand extends SubCommand {
     }
     
     @Override
-    public String[] getAliases() {
-        return new String[0];
-    }
-    
-    @Override
     public String[] getArguments() {
         return new String[]{"on", "off", "add", "remove", "list"};
     }

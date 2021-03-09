@@ -76,11 +76,6 @@ public class PublicCommand extends SubCommand {
     }
 
     @Override
-    public String[] getAliases() {
-        return new String[]{"pub", "private", "pri", "restricted", "res"};
-    }
-
-    @Override
     public String[] getArguments() {
         return new String[0];
     }

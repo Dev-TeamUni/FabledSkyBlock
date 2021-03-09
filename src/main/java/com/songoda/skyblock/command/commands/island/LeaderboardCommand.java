@@ -87,11 +87,6 @@ public class LeaderboardCommand extends SubCommand {
     }
 
     @Override
-    public String[] getAliases() {
-        return new String[]{"lb", "top"};
-    }
-
-    @Override
     public String[] getArguments() {
         return new String[]{"level", "bank", "votes"};
     }

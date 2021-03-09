@@ -16,6 +16,9 @@ import com.songoda.skyblock.config.FileManager.Config;
 import com.songoda.skyblock.message.MessageManager;
 import com.songoda.skyblock.sound.SoundManager;
 import com.songoda.skyblock.utils.ChatComponent;
+import java.lang.reflect.Field;
+import java.util.HashSet;
+import java.util.Set;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
@@ -23,6 +26,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandMap;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.command.PluginCommand;
@@ -34,23 +38,53 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import org.bukkit.plugin.SimplePluginManager;
 
 public class CommandManager implements CommandExecutor, TabCompleter {
 
     private final SkyBlock plugin;
     private List<SubCommand> islandCommands;
     private List<SubCommand> adminCommands;
+    private Set<String> helpAliases = new HashSet<>();
 
     public CommandManager(SkyBlock plugin) {
         this.plugin = plugin;
+        FileConfiguration configLoad = plugin.getLanguage();
 
         PluginCommand islandCMD = plugin.getCommand("island");
         if (islandCMD != null) {
+
+            CommandMap cmdMap = getCommandMap();
+            if (cmdMap != null) {
+                islandCMD.unregister(cmdMap);
+                islandCMD.setAliases(configLoad.getStringList("Command.Aliases"));
+                islandCMD.register(cmdMap);
+                cmdMap.register(plugin.getDescription().getName(), islandCMD);
+            }
+
             islandCMD.setExecutor(this);
             islandCMD.setTabCompleter(this);
             registerSubCommands();
         }
+        helpAliases.add("help");
+        helpAliases.addAll(configLoad.getStringList("Command.SubCommand.Help"));
+    }
 
+    private static CommandMap getCommandMap() {
+        CommandMap commandMap = null;
+
+        try {
+            if (Bukkit.getPluginManager() instanceof SimplePluginManager) {
+                Field f = SimplePluginManager.class.getDeclaredField("commandMap");
+                f.setAccessible(true);
+
+                commandMap = (CommandMap) f.get(Bukkit.getPluginManager());
+            }
+        } catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
+
+        return commandMap;
     }
 
     public void registerSubCommands() {
@@ -180,7 +214,7 @@ public class CommandManager implements CommandExecutor, TabCompleter {
             SubCommand subCommand;
             boolean isAdmin;
 
-            if (args[0].equalsIgnoreCase("help")) {
+            if (helpAliases.contains(args[0].toLowerCase())) {
                 if (player == null) {
                     sendConsoleHelpCommands(sender);
                 } else {
@@ -217,7 +251,7 @@ public class CommandManager implements CommandExecutor, TabCompleter {
 
                 return true;
             } else if (args[0].equalsIgnoreCase("admin")) {
-                if (args.length == 1 || args[1].equalsIgnoreCase("help")) {
+                if (args.length == 1 || helpAliases.contains(args[0].toLowerCase())) {
                     if (player == null) {
                         sendConsoleHelpCommands(sender);
                     } else {
